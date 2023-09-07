@@ -7,7 +7,7 @@ public class TesterCircle {
     int size = circles.size();
 
     public void init(){
-        circles.add(new Circle(2.346, 4.4573));
+        circles.add(new Circle(2.346, 4.4573, 1.345));
         updateSize();
     }
 
