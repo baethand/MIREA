@@ -1,6 +1,5 @@
 package prak4_1;
 
-// Абстрактный класс, описывающий транспортное средство
 abstract class Transport {
     private String name;
 
@@ -25,7 +24,6 @@ abstract class Transport {
     public abstract double calculateCargoCost(int distance);
 }
 
-// Подклассы, представляющие различные виды транспортных средств
 class Car extends Transport {
     private double passengerSpeed;
     private double cargoSpeed;

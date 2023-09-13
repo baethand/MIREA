@@ -30,7 +30,7 @@ class Circle extends Shape {
 
     public Circle(int x, int y) {
         super(x, y);
-        this.radius = 20 + (int) (Math.random() * 50); // Случайный радиус
+        this.radius = 20 + (int) (Math.random() * 50);
     }
 
     @Override

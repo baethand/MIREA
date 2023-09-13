@@ -4,9 +4,7 @@ public class Person {
     private String fullName;
     private int age;
 
-    public Person() {
-        // Конструктор без параметров
-    }
+    public Person() { }
 
     public Person(String fullName, int age) {
         this.fullName = fullName;
@@ -22,11 +20,11 @@ public class Person {
     }
 
     public static void main(String[] args) {
-        Person person1 = new Person(); // Инициализируем объект конструктором без параметров
+        Person person1 = new Person();
         person1.fullName = "Иван Иванов";
         person1.age = 30;
 
-        Person person2 = new Person("Петр Петров", 25); // Инициализируем объект конструктором с параметрами
+        Person person2 = new Person("Петр Петров", 25);
 
         System.out.println("Первый человек:");
         System.out.println("Полное имя: " + person1.fullName);

@@ -3,13 +3,12 @@ package prak2;
 import static java.lang.Math.pow;
 
 public class Circle {
-    private double x;
-    private double y;
+    private Point center;
     private double radius;
 
     public boolean isEquals(Circle circle){
-        if (this.x == circle.getX()
-                && this.y == circle.getY()
+        if (this.center.getX() == circle.getCenter().getX()
+                && this.center.getY() == circle.getCenter().getY()
                 && this.radius == circle.getRadius()){
             return true;
         }
@@ -17,9 +16,17 @@ public class Circle {
     }
 
     public Circle(double x, double y, double radius) {
-        this.x = x;
-        this.y = y;
+        this.center.setX(x);
+        this.center.setY(y);
         this.radius = radius;
+    }
+
+    public Point getCenter() {
+        return center;
+    }
+
+    public void setCenter(Point center) {
+        this.center = center;
     }
 
     public double getS(double radius){
@@ -38,24 +45,10 @@ public class Circle {
         this.radius = radius;
     }
 
-    public double getX() {
-        return x;
-    }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
 
     public void setXY(double x, double y) {
-        this.x = x;
-        this.y = y;
+        this.center.setX(x);
+        this.center.setY(y);
     }
 }

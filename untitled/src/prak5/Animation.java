@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Animation extends JFrame {
-    private BufferedImage[] frames; // Массив кадров анимации
-    private int currentFrame = 0; // Текущий кадр
+    private BufferedImage[] frames;
+    private int currentFrame = 0;
     private JLabel animationLabel;
 
     public Animation() {
@@ -46,7 +46,6 @@ public class Animation extends JFrame {
         frames = new BufferedImage[numFrames];
 
         for (int i = 0; i < numFrames; i++) {
-            // Замените "frameX.png" на имена ваших изображений кадров
             String frameFilename = "C:\\_gitHub\\MIREA\\untitled\\images\\anim" + i + ".png";
 
             try {

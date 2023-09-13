@@ -1,4 +1,4 @@
-package prak2;
+package prak2.zad4;
 
 public class Computer {
     private String cpu;

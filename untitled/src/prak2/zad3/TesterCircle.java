@@ -1,4 +1,6 @@
-package prak2;
+package prak2.zad3;
+
+import prak2.Circle;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,23 @@
 package prak4_1;
 
+class Shape {
+    public String getType() {
+        return "Фигура";
+    }
 
+    public double getArea() {
+        return 0.0;
+    }
+
+    public double getPerimeter() {
+        return 0.0;
+    }
+
+    @Override
+    public String toString() {
+        return "Тип: " + getType() + "\nПлощадь: " + getArea() + "\nПериметр: " + getPerimeter();
+    }
+}
 
 class Circle extends Shape {
     private double radius;
@@ -61,7 +78,7 @@ class Square extends Rectangle {
     }
 }
 
-public class ShapeTester {
+public class ShapeTesterZad1 {
     public static void main(String[] args) {
         Shape circle = new Circle(5.0);
         Shape rectangle = new Rectangle(4.0, 6.0);

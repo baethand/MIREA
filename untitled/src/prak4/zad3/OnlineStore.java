@@ -13,8 +13,7 @@ public class OnlineStore {
     }
 
     public boolean authenticate(String username, String password) {
-        // Реализуйте аутентификацию здесь, проверяя данные пользователя
-        // и возвращая true, если аутентификация успешна
+        //Здесь логика аутентификации
         return true;
     }
 
@@ -35,7 +34,7 @@ public class OnlineStore {
     }
 
     public void checkout() {
-        // Реализуйте процесс оформления покупки
+        // Процесс оформления покупки
     }
 
     public static void main(String[] args) {

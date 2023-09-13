@@ -3,7 +3,7 @@ package prak3;
 import java.util.Arrays;
 import java.util.Random;
 
-public class RandomArray {
+public class zad1 {
     public static void main(String[] args) {
         double[] array1 = generateRandomArrayUsingMath(5);
         System.out.println("Массив (Math.random()): " + Arrays.toString(array1));

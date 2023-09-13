@@ -1,13 +1,11 @@
 package prak4.zad4;
 
-// Перечисление для марок компьютера
 enum ComputerBrand {
     ACER,
     ASUS,
     DELL,
     HP,
-    LENOVO,
-    // Добавьте другие марки по вашему выбору
+    LENOVO
 }
 
 // Класс, представляющий процессор
@@ -21,8 +19,6 @@ class Processor {
         this.clockSpeedGHz = clockSpeedGHz;
         this.cores = cores;
     }
-
-    // Геттеры и сеттеры
 
     public void start() {
         System.out.println("Процессор запущен");
@@ -42,8 +38,6 @@ class Memory {
         this.capacityGB = capacityGB;
         this.type = type;
     }
-
-    // Геттеры и сеттеры
 
     public void load() {
         System.out.println("Память загружена");
@@ -65,8 +59,6 @@ class Monitor {
         this.screenSizeInches = screenSizeInches;
         this.resolution = resolution;
     }
-
-    // Геттеры и сеттеры
 
     public void display() {
         System.out.println("Монитор отображает изображение");
@@ -90,8 +82,6 @@ class Computer {
         this.memory = memory;
         this.monitor = monitor;
     }
-
-    // Геттеры и сеттеры
 
     public void turnOn() {
         System.out.println("Компьютер " + brand + " включен");

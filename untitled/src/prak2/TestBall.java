@@ -1,6 +1,9 @@
 package prak2;
 
-public class Ball {
+public class TestBall {
+}
+
+class Ball {
     private double x;
     private double y;
 

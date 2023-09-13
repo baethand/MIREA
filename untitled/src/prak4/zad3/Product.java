@@ -11,8 +11,6 @@ public class Product {
         this.price = price;
     }
 
-    // Геттеры и сеттеры
-
     public String getName() {
         return name;
     }

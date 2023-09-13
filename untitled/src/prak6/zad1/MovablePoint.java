@@ -81,7 +81,7 @@ public class MovablePoint implements Movable {
 
 // Класс MovableCircle, реализующий интерфейс Movable и использующий MovablePoint
 class MovableCircle implements Movable {
-    private MovablePoint center; // Центр окружности
+    protected MovablePoint center; // Центр окружности
     private int radius;
 
     // Конструктор с аргументами

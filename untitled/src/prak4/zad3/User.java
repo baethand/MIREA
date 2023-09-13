@@ -9,8 +9,6 @@ public class User {
         this.password = password;
     }
 
-    // Геттеры и сеттеры
-
     public String getUsername() {
         return username;
     }

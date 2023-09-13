@@ -1,6 +1,5 @@
 package prak4_1;
 
-// Абстрактный класс, описывающий сущность мебель
 abstract class Furniture {
     private String name;
     private double price;
@@ -18,11 +17,9 @@ abstract class Furniture {
         return price;
     }
 
-    // Абстрактный метод для вывода информации о мебели
     public abstract void displayInfo();
 }
 
-// Подклассы, представляющие различные виды мебели
 class Chair extends Furniture {
     public Chair(String name, double price) {
         super(name, price);
@@ -56,7 +53,6 @@ class Sofa extends Furniture {
     }
 }
 
-// Класс, моделирующий магазин мебели
 class FurnitureShop {
     private Furniture[] inventory;
 
@@ -64,7 +60,6 @@ class FurnitureShop {
         inventory = new Furniture[capacity];
     }
 
-    // Добавление мебели в магазин
     public void addFurniture(Furniture furniture, int index) {
         if (index >= 0 && index < inventory.length) {
             inventory[index] = furniture;
@@ -73,7 +68,6 @@ class FurnitureShop {
         }
     }
 
-    // Вывод информации о всей мебели в магазине
     public void displayInventory() {
         System.out.println("Мебель в магазине:");
         for (Furniture item : inventory) {
