@@ -1,7 +1,7 @@
 package prak2;
 
 public class TestAuthor {
-    public static void init(){
+    public static void main(String[] args){
         Author author = new Author("Alex", "qwerty@gmail.com", 'М');
         System.out.println(author.getName());
         System.out.println(author.getEmail());
@@ -9,7 +9,6 @@ public class TestAuthor {
         author.setEmail("nice@mail.ru");
         System.out.println(author.getEmail());
         author.toString();
-
     }
 }
 

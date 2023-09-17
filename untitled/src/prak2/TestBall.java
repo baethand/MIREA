@@ -1,6 +1,12 @@
 package prak2;
 
 public class TestBall {
+    public static void main(String[] args){
+        Ball ball = new Ball(1, 2);
+        System.out.println(ball.toString());
+        ball.move(2, 3);
+        System.out.println(ball.toString());
+    }
 }
 
 class Ball {

@@ -16,6 +16,7 @@ public class Circle {
     }
 
     public Circle(double x, double y, double radius) {
+        this.center = new Point();
         this.center.setX(x);
         this.center.setY(y);
         this.radius = radius;
