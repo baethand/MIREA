@@ -1,0 +1,150 @@
+html {
+  padding: 0px;
+  margin: 0;
+}
+
+
+h2{
+  text-align: center;
+  font-size: 30px;
+  background: brown;
+  opacity:0.22;
+}
+
+.map{
+  visibility: hidden;
+
+}
+
+.burger {
+  position: relative;
+}
+
+.after::after{
+  content: " - Обязательно!";
+   color: red;
+}
+header {
+  background: #f7d4b2;
+  display: flex;
+}
+
+header li {
+  display: inline-block;
+  margin-left: 15px;
+  text-decoration: none;
+}
+.before li:before{
+  content: "✿";
+}
+header a {
+  text-decoration: none;
+  color: black;
+  font-size: 25px;
+}
+
+.Katalog {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 960px;
+  height: 110px;
+  text-transform: uppercase;
+  line-height: 80px;
+}
+
+.dropdown {
+  display: none;
+}
+
+input[type="checkbox"]:checked{
+  width:40px;
+}
+
+@media (max-width: 905px) {
+
+  /* Кнопка выпадающего списка */
+  .dropbtn {
+    background-color: #cbaa89;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 15px;
+  }
+
+  /* Контейнер <div> - необходим для размещения выпадающего содержимого */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Выпадающее содержимое (скрыто по умолчанию) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+  }
+
+  /* Ссылки внутри выпадающего списка */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    
+  }
+
+  /* Изменение цвета выпадающих ссылок при наведении курсора */
+  .dropdown-content a:hover {background-color: #ddd;}
+
+  /* Показать выпадающее меню при наведении курсора */
+  .dropdown:hover .dropdown-content {display: block;}
+
+  /* Изменение цвета фона кнопки раскрывающегося списка при отображении содержимого раскрывающегося списка */
+  .dropdown:hover .dropbtn {background-color: #9f8973;}
+  
+  header nav{
+    display: none;
+    background-color: black;
+  }
+
+  header {
+    padding: 0px;
+    height: 110px;
+  }
+
+  header .Katalog {
+    display: none;
+  }
+
+  /* .burger {
+
+  } */
+
+  header .Katalog {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  header li {
+    display: block;
+    margin: 10px 0;
+  }
+
+  header a {
+    font-size: 20px;
+  }
+
+  main section {
+    padding: 20px;
+  }
+}
+
+.img1{
+  transform: rotate(0.5turn)
+}
