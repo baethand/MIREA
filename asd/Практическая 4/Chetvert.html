@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Работа с кнопками</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>4 Практика</h1>
+    <fieldset>
+    <h2>Резюме</h2>
+    <form action='' method="get">
+      <p> <!--текст-->
+        <label for="name">Введите имя:</label>
+        <input type="text" name="name" id="name" required>
+      </p>
+      <p><!--др-->
+        <legend>Укажите ваш год рожения</legend>
+        <input type="datetime-local" name="datetime-local" id="datetime-local" required>
+      </p>
+      <p>
+        <label for="select" >В каком городе живете</label>
+        <select  id="select" multiple>
+          <option >Москва</option>
+          <option >Владивосток</option>ы
+        </select>
+      </p>
+        <p>
+          <label for="select" >Выберите в каком городе будете работать</label>
+          <select  id="select">
+            <option >--Выберите город--</option>
+            <option >Москва</option>
+            <option >Владивосток</option>ы
+          </select>
+        </p>
+        <p><!--телефон-->
+        <label for="tel">Введите телефон:</label>
+        <input type="tel" name="tel" id="tel" required placeholder="+7 *** ***-**-**">
+      </p>
+      <p><!--маил-->
+
+        <label for="email">Введите email:</label>
+        <input type="email" name="email" id="email" required>
+      </p>
+      <p><!--пароль-->
+        <label for="password">Введите пароль:</label>
+        <input type="password" name="password" id="password" min="10" max="30" required>
+      </p>
+      <p><!--файл-->
+        <label for="file">Прикрепите свое фото:</label>
+        <input type="file" name="file" id="file" required>
+      </p>
+      <p><!--чеклист-->
+
+        <legend>В каком формате вы будете заниматься:</legend>
+        <input type="checkbox" name="udalenka" id="udalenka" >
+        <label for="udalenka">В удаленном формате</label>
+        <input type="checkbox" name="ofice" id="ofice" checked>
+        <label for="ofice">В офисном формате</label>
+      </p>
+
+        <p><!--радио-->
+          <legend>Какой язык предпочитаете:</legend>
+          <input type="radio" name="choice" id="python" >
+          <label for="choice">Python</label>
+          <input type="radio" name="choice" id="C++" >
+          <label for="choice">C++</label>
+        </p>
+
+
+      <label for="about">Расскажите о себе</label><br>
+      <textarea id="about" name="name" rows="8" cols="50" minlength="10" maxlength="250"></textarea>
+      <br>
+      <button type="button" name="button">проверить данные</button>
+
+      <p><!--отправка-->
+        <input type="submit" name="submit" id="submit" required>
+      </p>
+      </form>
+    </fieldset>
+    <fieldset>
+      <h2>Видео как заполнять резюме</h2>
+      
+    </fieldset>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/3OFj6l2tQ9s?si=ExGCNCvKKJf7hmUn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </body>
+</html>
