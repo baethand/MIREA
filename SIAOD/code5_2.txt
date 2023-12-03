@@ -1,0 +1,557 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+// Структура Данных
+struct LibraryNote {
+    char fio[30];
+    int number;
+    char address[30];
+};
+
+// Перечисление для представления цветов узлов дерева
+enum Color { RED, BLACK };
+
+// Структура для представления узла красно-чёрного дерева
+struct Node {
+    int data;        // Значение узла
+    int key;         // Позция в файле
+    Color color;     // Цвет узла (красный или черный)
+    Node* parent;    // Указатель на родительский узел
+    Node* left;      // Указатель на левого потомка
+    Node* right;     // Указатель на правого потомка
+};
+
+// Функция для добавления записи в бинарный файл
+int add_bin_file(string filename) {
+    ofstream file(filename, ios::out | ios::binary | ios::app);
+
+    LibraryNote note;
+    cout << "Введите информацию о читальском абонименте:\n";
+    cout << "ФИО: ";
+    cin.ignore();
+    cin.getline(note.fio, sizeof(note.fio));
+
+    cout << "Номер (5 цифр): ";
+    cin >> note.number;
+
+    cout << "Адрес: ";
+    cin.ignore();
+    cin.getline(note.address, sizeof(note.address));
+
+    file.write(reinterpret_cast<const char*>(&note), sizeof(LibraryNote));
+    file.close();
+
+    return note.number; // Возвращаем номер читательского абонемента
+}
+
+// Функция для получения индекса последней записи в бинарном файле
+int getLastRecordIndex(string filename) {
+    ifstream file(filename, ios::binary | ios::ate);
+    if (!file.is_open()) {
+        return 0; // Если файл не открыт, возвращаем 0
+    }
+
+    int size = file.tellg(); // Получаем текущую позицию (размер файла)
+    file.close();
+
+    int recordSize = sizeof(LibraryNote); // Размер одной записи
+    return size / recordSize; // Возвращаем индекс последней записи
+}
+
+// Функция для вывода информации о машине по указанному индексу в бинарном файле
+void printAtIndex(string filename, int index) {
+    ifstream file(filename, ios::binary);
+    if (!file.is_open()) {
+        cout << "Ошибка при открытии файла.\n";
+        return;
+    }
+
+    LibraryNote note;
+    file.seekg(index * sizeof(LibraryNote)); // Перемещаем указатель на нужную позицию
+    file.read(reinterpret_cast<char*>(&note), sizeof(LibraryNote));
+
+    cout << "Информация о машине с индексом " << index + 1 << ":\n";
+    cout << "ФИО: " << note.fio << endl;
+    cout << "Номер: " << note.number << endl;
+    cout << "Адрес: " << note.address << endl;
+
+    file.close();
+}
+
+// Функция для вывода содержимого бинарного файла с информацией об абониментах
+void print_bin_file(string filename) {
+    ifstream file(filename, ios::binary);
+    if (!file.is_open()) {
+        cout << "Ошибка при открытии файла.\n";
+        return;
+    }
+
+    LibraryNote note;
+    cout << "Содержимое бинарного файла с информацией об абониментах:\n";
+    while (file.read(reinterpret_cast<char*>(&note), sizeof(LibraryNote))) {
+        cout << "ФИО: " << note.fio << " Номер: " << note.number << " Адрес: " << note.address << endl;
+    }
+
+    file.close();
+}
+
+// Функция для создания бинарного файла с информацией об абониментах из текстового файла
+void create_bin_file(string fText, string fBin) {
+    ifstream inputFile(fText);
+    if (!inputFile.is_open()) {
+        cout << "Ошибка при открытии текстового файла.\n";
+        return;
+    }
+
+    ofstream outputFile(fBin, ios::binary);
+    if (!outputFile.is_open()) {
+        cout << "Ошибка при создании бинарного файла.\n";
+        return;
+    }
+
+    LibraryNote note;
+    while (inputFile.getline(note.fio, sizeof(note.fio)) && inputFile >> note.number && inputFile.ignore() && inputFile.getline(note.address, sizeof(note.address))) {
+        outputFile.write(reinterpret_cast<const char*>(&note), sizeof(LibraryNote));
+    }
+
+    inputFile.close();
+    outputFile.close();
+    cout << "Бинарный файл успешно создан из текстового файла.\n";
+}
+
+
+// Класс, представляющий красно-чёрное дерево
+class RedBlackTree {
+public:
+    RedBlackTree() : root(nullptr) {}
+
+    // Метод для вставки значения в дерево
+    void insert(int value, int key, int& rotations) {
+        Node* node = new Node{ value, key,  RED, nullptr, nullptr, nullptr };
+        if (root == nullptr) {
+            root = node;
+            root->color = BLACK;
+        }
+        else {
+            insertNode(root, node);
+            fixInsert(node, rotations);
+        }
+    }
+
+    // Метод для удаления значения из дерева
+    void remove(int value) {
+        Node* node = search(value);
+        if (node == nullptr) {
+            cout << "Node with value " << value << " not found in the tree." << endl;
+            return;
+        }
+        deleteNode(node);
+    }
+
+    // Метод для поиска значения в дереве
+    Node* search(int value) {
+        return searchN(value, root);
+    }
+
+    // Метод для выполнения инфиксного обхода дерева
+    void inorderTraversal() {
+        inorderTraversal(root);
+        cout << endl;
+    }
+
+    // Метод вывода
+    void print(Node* node, int mode, int level = 0) {
+        return display_tree(node, mode, level);
+    }
+
+    // Метод для получения указателя на корень дерева
+    Node* getRoot() {
+        return root;
+    }
+
+private:
+    Node* root;
+
+    // Вставка узла в дерево
+    void insertNode(Node* root, Node* node) {
+        if (node->data < root->data) {
+            if (root->left != nullptr) {
+                insertNode(root->left, node);
+                return;
+            }
+            else {
+                root->left = node;
+                node->parent = root;
+            }
+        }
+        else {
+            if (root->right != nullptr) {
+                insertNode(root->right, node);
+                return;
+            }
+            else {
+                root->right = node;
+                node->parent = root;
+            }
+        }
+    }
+
+
+    // Балансировка дерева после вставки
+    void fixInsert(Node* node, int& rotations) {
+        // Пока текущий узел не является корнем и цвет его родителя RED (красный), выполняем балансировку
+        while (node != root && node->parent->color == RED) {
+            if (node->parent == node->parent->parent->left) {
+                // Если родитель текущего узла - левый потомок своего родителя (случай "дядя справа")
+                Node* uncle = node->parent->parent->right; // Получаем указатель на дядю справа
+
+                if (uncle != nullptr && uncle->color == RED) {
+                    // Если дядя RED, выполняем перекраску и продвигаемся вверх по дереву
+                    node->parent->color = BLACK;
+                    uncle->color = BLACK;
+                    node->parent->parent->color = RED;
+                    node = node->parent->parent;
+                }
+                else {
+                    // Если дядя BLACK или nullptr, выполняем соответствующее вращение и перекраску
+                    if (node == node->parent->right) {
+                        node = node->parent;
+                        rotateLeft(node); rotations++;
+                    }
+                    node->parent->color = BLACK;
+                    node->parent->parent->color = RED;
+                    rotateRight(node->parent->parent); rotations++;
+                }
+            }
+            else { // Если родитель текущего узла - правый потомок своего родителя (случай "дядя слева")
+                Node* uncle = node->parent->parent->left; // Получаем указатель на дядю слева
+
+                if (uncle != nullptr && uncle->color == RED) {
+                    // Если дядя RED, выполняем перекраску и продвигаемся вверх по дереву
+                    node->parent->color = BLACK;
+                    uncle->color = BLACK;
+                    node->parent->parent->color = RED;
+                    node = node->parent->parent;
+                }
+                else {
+                    // Если дядя BLACK или nullptr, выполняем соответствующее вращение и перекраску
+                    if (node == node->parent->left) {
+                        node = node->parent;
+                        rotateRight(node); rotations++;
+                    }
+                    node->parent->color = BLACK;
+                    node->parent->parent->color = RED;
+                    rotateLeft(node->parent->parent); rotations++;
+                }
+            }
+        }
+        root->color = BLACK; // Убеждаемся, что корень дерева всегда черного цвета
+    }
+
+    // Левое вращение
+    void rotateLeft(Node* node) {
+        Node* rightChild = node->right;
+        node->right = rightChild->left;
+        if (rightChild->left != nullptr) {
+            rightChild->left->parent = node;
+        }
+        rightChild->parent = node->parent;
+        if (node->parent == nullptr) {
+            root = rightChild;
+        }
+        else if (node == node->parent->left) {
+            node->parent->left = rightChild;
+        }
+        else {
+            node->parent->right = rightChild;
+        }
+        rightChild->left = node;
+        node->parent = rightChild;
+    }
+
+    // Правое вращение
+    void rotateRight(Node* node) {
+        Node* leftChild = node->left;
+        node->left = leftChild->right;
+        if (leftChild->right != nullptr) {
+            leftChild->right->parent = node;
+        }
+        leftChild->parent = node->parent;
+        if (node->parent == nullptr) {
+            root = leftChild;
+        }
+        else if (node == node->parent->left) {
+            node->parent->left = leftChild;
+        }
+        else {
+            node->parent->right = leftChild;
+        }
+        leftChild->right = node;
+        node->parent = leftChild;
+    }
+
+    // Удаление узла из дерева
+    void deleteNode(Node* node) {
+        Node* replacement;
+        Node* successor = nullptr;
+        bool isBlack = node->color == BLACK; // Проверяем, является ли удаляемый узел черным
+
+        if (node->left != nullptr && node->right != nullptr) {
+            successor = minimumNode(node->right); // Находим преемника удаляемого узла
+            node->data = successor->data; // Заменяем данные удаляемого узла данными преемника
+            node = successor; // Устанавливаем удаляемый узел на преемника
+        }
+
+        if (node->left != nullptr) {
+            replacement = node->left; // Устанавливаем замену на левый потомок  (если есть)
+        }
+        else {
+            replacement = node->right; // Устанавливаем замену на правый потомок
+        }
+
+        if (replacement != nullptr) {
+            replacement->parent = node->parent; // Обновляем ссылку на родителя для замены
+
+            if (node->parent == nullptr) {
+                root = replacement; // Если удаляемый узел был корнем, заменяем корень
+            }
+            else if (node == node->parent->left) {
+                node->parent->left = replacement; // Обновляем ссылку на левого потомка родителя
+            }
+            else {
+                node->parent->right = replacement; // Обновляем ссылку на правого потомка родителя
+            }
+
+            delete node; // Удаляем узел
+
+            if (isBlack) {
+                fixDelete(replacement); // Если удаляемый узел был черным, исправляем баланс
+            }
+        }
+        else if (node->parent == nullptr) {
+            root = nullptr; // Если удаляемый узел был корнем, удаляем корень и узел
+            delete node;
+        }
+        else {
+            if (node->color == BLACK) {
+                fixDelete(node); // Если удаляемый узел был черным, исправляем баланс
+            }
+
+            if (node->parent != nullptr) {
+                if (node == node->parent->left) {
+                    node->parent->left = nullptr; // Обнуляем ссылку на левого потомка у родителя
+                }
+                else {
+                    node->parent->right = nullptr; // Обнуляем ссылку на правого потомка у родителя
+                }
+
+                delete node; // Удаляем узел
+            }
+        }
+    }
+
+    // Балансировка дерева после удаления
+    void fixDelete(Node* node) {
+        while (node != root && node->color == BLACK) {
+            if (node == node->parent->left) {
+                Node* sibling = node->parent->right; // Получаем брата (потомка родителя)
+                if (sibling->color == RED) { // Если брат красный, меняем цвета
+                    sibling->color = BLACK;
+                    node->parent->color = RED;
+                    rotateLeft(node->parent); // Вращение влево с родителем
+                    sibling = node->parent->right;
+                }
+                if (sibling->left->color == BLACK && sibling->right->color == BLACK) {
+                    sibling->color = RED; // Если оба потомка брата черные, брат становится красным
+                    node = node->parent; // Поднимаемся выше
+                }
+                else {
+                    if (sibling->right->color == BLACK) { // Если правый потомок брата черный
+                        sibling->left->color = BLACK;
+                        sibling->color = RED;
+                        rotateRight(sibling); // Вращение вправо с братом
+                        sibling = node->parent->right;
+                    }
+                    sibling->color = node->parent->color; // Брат получает цвет родителя
+                    node->parent->color = BLACK; // Родитель становится черным
+                    sibling->right->color = BLACK; // Правый потомок брата становится черным
+                    rotateLeft(node->parent); // Вращение влево с родителем
+                    node = root; // Завершаем цикл, так как закончили балансировку
+                }
+            }
+            else {
+                Node* sibling = node->parent->left; // Аналогично для правых и левых случаев
+                if (sibling->color == RED) {
+                    sibling->color = BLACK;
+                    node->parent->color = RED;
+                    rotateRight(node->parent);
+                    sibling = node->parent->left;
+                }
+                if (sibling->right->color == BLACK && sibling->left->color == BLACK) {
+                    sibling->color = RED;
+                    node = node->parent;
+                }
+                else {
+                    if (sibling->left->color == BLACK) {
+                        sibling->right->color = BLACK;
+                        sibling->color = RED;
+                        rotateLeft(sibling);
+                        sibling = node->parent->left;
+                    }
+                    sibling->color = node->parent->color;
+                    node->parent->color = BLACK;
+                    sibling->left->color = BLACK;
+                    rotateRight(node->parent);
+                    node = root;
+                }
+            }
+        }
+        node->color = BLACK; // Устанавливаем корень в черный цвет, чтобы сохранить свойства КЧ-дерева
+    }
+
+    // Поиск узла с заданным значением в дереве
+    Node* searchN(int value, Node* node) {
+        if (node == nullptr || node->data == value) {
+            return node;
+        }
+        if (value < node->data) {
+            return searchN(value, node->left);
+        }
+        else {
+            return searchN(value, node->right);
+        }
+    }
+
+    // Нахождение узла с минимальным значением в дереве
+    Node* minimumNode(Node* node) {
+        while (node->left != nullptr) {
+            node = node->left;
+        }
+        return node;
+    }
+
+    // Рекурсивный инфиксный обход дерева
+    void inorderTraversal(Node* node) {
+        if (node != nullptr) {
+            inorderTraversal(node->left);
+            cout << node->data << " ";
+            inorderTraversal(node->right);
+        }
+    }
+
+    // Вывод дерева
+    void display_tree(Node* node, int mode, int level = 0) {
+        if (node == nullptr) {
+            if (level == 0) {
+                cout << "Длина дерева ноль -_-" << endl;
+            }
+            if (mode)
+            {
+                cout << string(level * 4, ' ') << level << "-> null B " << endl;
+            }
+
+            return;
+        }
+
+        display_tree(node->right, mode, level + 1);
+        cout << (node->color == BLACK ? "" : "\033[31m") << string(level * 4, ' ') << level << "-> " << node->data << " " << (node->color == BLACK ? "B" : "R\033[0m") << endl;
+        display_tree(node->left, mode, level + 1);
+    }
+};
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    string fText = "LibraryNote_data.txt";
+    string fBin = "LibraryNote_data.dat";
+    RedBlackTree tree;
+
+    while (true) {
+        int c;
+        cout << "\n=================== \
+            \n[ 1 ] - Создать бинарный файл  \
+            \n[ 2 ] - Вывести бинарный файл  \
+            \n[ 3 ] - Создать КЧД по .dat файлу \
+            \n[ 4 ] - Вывод КЧД \
+            \n  L[ 41 ] - Вывод КЧД с пустыми листьями \
+            \n[ 5 ] - Удалить элемент из дерева по номеру \
+            \n[ 6 ] - Добавить элемент \
+            \n[ 7 ] - Поиск элемента \
+            \n===================\n> ";
+        cin >> c;
+
+        switch (c)
+        {
+        case 1:
+        {
+            create_bin_file(fText, fBin);
+            break;
+        }
+        case 2:
+        {
+            print_bin_file(fBin);
+            break;
+        }
+        case 3:
+        {
+            int rotations = 0;
+            ifstream fb(fBin, ios::in | ios::binary);
+            LibraryNote x;
+            int key = 0;
+            fb.read((char*)&x, sizeof(LibraryNote)); key++;
+            while (!fb.eof())
+            {
+                int rotations2 = 0;
+                tree.insert(x.number, key, rotations2); key++;
+                rotations += rotations2;
+                fb.read((char*)&x, sizeof(LibraryNote));
+            }
+            cout << "\nДерево построено:\n  кол-во поворотов: ";
+            cout << rotations << "\n  кол-во элементов: " << key << endl;
+            cout << "\n  среднее кол-во поворотов: " << (double)rotations / (double)key << endl;
+            break;
+        }
+        case 4:
+        {
+            cout << endl;
+            tree.print(tree.getRoot(), 0);
+            break;
+        }
+        case 41:
+        {
+            cout << endl;
+            tree.print(tree.getRoot(), 1);
+            break;
+        }
+        case 5:
+        {
+            cout << "\nВведите номер для удалению: ";
+            int num;
+            cin >> num;
+            tree.remove(num);
+            cout << "\nЭлемент удалён.\n";
+            break;
+        }
+        case 6:
+        {
+            int rotations = 0;
+            tree.insert(add_bin_file(fBin), getLastRecordIndex(fBin), rotations);
+            cout << "\nЭлемент добавлен. Кол-во поворотов: ";
+            cout << rotations << endl;
+            break;
+        }
+        case 7:
+        {
+            cout << "\nВведите номер для поиска: ";
+            int num;
+            cin >> num;
+            printAtIndex(fBin, tree.search(num)->key - 1);
+            break;
+        }
+        default:
+            break;
+        }
+    }
+}
