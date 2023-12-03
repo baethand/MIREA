@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+  </head>
+  <body>
+    <div class="asd">
+      <h2>Вход в панель управления сайтом</h2>
+      <form action="process_login.php" >
+          <label for="username">Имя пользователя:</label>
+          <input type="text" id="username" name="username" required><br><br>
+
+          <label for="password">Пароль:</label>
+          <input type="password" id="password" name="password" required><br><br>
+
+          <input type="submit" value="Войти" id="btn">
+      </form>
+      <br>
+      <hr>
+      <button id="likeButton" onclick="changeColor()">Like</button>
+      <br>
+    </div>
+  </body>
+  <script src="code.js"> </script>
+</html>

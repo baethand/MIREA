@@ -1,0 +1,79 @@
+
+
+
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+* {
+  font-family: "Raleway";
+  box-sizing: border-box;
+}
+
+
+
+
+form {
+  margin-top: 20px;
+}
+
+#captchaValue {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+/**/
+
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.card {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 10px;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+}
+
+.card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/**/
+
+#cart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+#cart {
+  width: 500px;
+  border: 1px solid #ccc;
+  border-radius: 5%;
+  padding: 10px;
+  margin: 20px;
+  text-align: center;
+}
+
+#addToCartBtn {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5%;
+}

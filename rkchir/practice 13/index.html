@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practice 13</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nova+Square&display=swap');
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Nova Square', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 200vh;
+            background-color: rgb(10, 61, 14);
+        }
+        
+        #centered-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: -2;
+        }
+
+        #centered-image {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 30px;
+            box-shadow: 0px 0px 30px 10px rgba(4, 23, 5, 0.4);
+        }
+
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            left: 10px;
+            max-width: 250px;
+            width: 100%;
+            z-index: 99;
+        }
+
+        .notification {
+            border: 4px solid rgb(0, 0, 0);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            position: relative;
+            background-color: rgba(51, 207, 16, 0.6);
+            box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+
+        .parallax-container {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: aliceblue;
+        }
+
+        .parallax-content {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 6rem;
+            position: relative;
+            margin-bottom: 50vh;
+        }
+
+        .parallax-bg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .footer{
+            height: 50vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: #f1f1f1;
+            background: linear-gradient(to bottom, rgb(10, 61, 14), rgb(22, 50, 4));
+            background-size: cover;
+            position: fixed;
+            bottom: 0;
+            z-index: -3;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="parallax-container">
+        <div class="parallax-bg" style="background-image: url('img\\les.jpg');"></div>
+        <div class="parallax-content">
+            <h1>-> Parallax <-</h1>
+        </div>
+        <div id="centered-container">
+            <img id="centered-image" src="img\photo.webp" alt="Centered Image">
+        </div>
+        <div class="footer">
+            <h1>-> Parallax <-</h1>
+        </div>
+    </div>
+  
+    <div id="notification-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var centeredContainer = document.getElementById('centered-container');
+            var centeredImage = document.getElementById('centered-image');
+
+            function updateImagePosition() {
+                var windowWidth = window.innerWidth;
+                var windowHeight = window.innerHeight;
+
+                var imageWidth = 250;
+                var imageHeight = 200;
+
+                centeredImage.style.width = imageWidth + 'px';
+                centeredImage.style.height = imageHeight + 'px';
+
+                // Вычисление новых координат для центрирования
+                var leftPos = Math.floor((windowWidth - imageWidth + 250) / 2);
+                var topPos = Math.floor((windowHeight - imageHeight) / 2);
+
+                centeredContainer.style.left = leftPos + 'px';
+                centeredContainer.style.top = topPos + 'px';
+            }
+
+            // Обновление позиции картинки при загрузке страницы и изменении размеров окна
+            window.addEventListener('resize', updateImagePosition);
+            window.addEventListener('DOMContentLoaded', updateImagePosition);
+
+            // Обработка клика на картинке
+            centeredImage.addEventListener('click', function (event) {
+                var clickedX = event.clientX;
+                var clickedY = event.clientY;
+
+                console.log('Clicked at coordinates: (' + clickedX + ', ' + clickedY + ')');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var notificationContainer = document.getElementById('notification-container');
+
+            function createNotification(message) {
+                var notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = '<span>' + message + '</span>';
+
+                var closeBtn = document.createElement('span');
+                closeBtn.className = 'close-btn';
+                closeBtn.innerHTML = 'X';
+                closeBtn.addEventListener('click', function () {
+                    notificationContainer.removeChild(notification);
+                });
+
+                notification.appendChild(closeBtn);
+
+                notificationContainer.appendChild(notification);
+            }
+            
+            // Пример добавления уведомлений
+            createNotification('Notification 1');
+            createNotification('Notification 2');
+            createNotification('Notification 3');
+
+            // Добавление делегированного обработчика для кнопок закрытия
+            notificationContainer.addEventListener('click', function (event) {
+                if (event.target.classList.contains('close-btn')) {
+                    var notification = event.target.closest('.notification');
+                    if (notification) {
+                        notificationContainer.removeChild(notification);
+                    }
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const parallaxContainer = document.querySelector('.parallax-container');
+        const parallaxBg = document.querySelector('.parallax-bg');
+
+        document.addEventListener('scroll', function () {
+            let scrollPosition = window.scrollY;
+            parallaxBg.style.transform = 'translateY(' + scrollPosition * 0.5 + 'px)';
+        });
+    });
+    </script>
+</body>
+</html>

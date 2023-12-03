@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="ex.css">
+    <link rel="icon" href="sweets.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+    <script src="ten.js"></script>
+  </head>
+  </section>
+  <body>
+
+
+
+
+    <div class="container4">
+        <h2>Капча</h2>
+        <form id="captchaForm">
+          <div id="captchaValue"></div>
+          <label for="captchaInput">Введите капчу:</label>
+          <input type="text" id="captchaInput" name="captchaInput">
+          <button type="button" onclick="validateCaptcha()">Submit</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script src="ten.js"></script>
+
+
+
+    <div class="card-container">
+        <div class="card" id="card1">
+            <h2>Карточка 1</h2>
+            <p class="card-text" id="text1">FPDSSFKD DOFSODFOPSDFOPSFSODDKO</p>
+        </div>
+
+        <div class="card" id="card2">
+            <h2>Карточка 2</h2>
+            <p class="card-text" id="text2">daisdjiouddhoidsiudiSUUASODUSDIOFUSDOFUS0ODFUSDOFYSIDFHSUHDFISHAFHSDIUHFSD</p>
+        </div>
+    </div>
+
+    <script src="ten.js"></script>
+
+
+
+    <div id="cart-container">
+        <div id="cart">
+            <h2>Корзина</h2>
+            <p>Итого: <span id="cartValue">0</span> рублей</p>
+            <button id="addToCartBtn">Добавить в корзину</button>
+        </div>
+    </div>
+
+    <script>
+        // Accumulator constructor function
+        function Accumulator(startingValue) {
+          this.value = startingValue;
+
+          this.read = function() {
+            var userInput = prompt("Введите цену товара:", "2");
+            var cost = parseFloat(userInput);
+            if (!isNaN(cost)) {
+              this.value += cost;
+              updateCartValue();
+            } else {
+              alert("Некорректное значение. Пожалуйста, попробуйте снова");
+            }
+          };
+        }
+
+        var cart = new Accumulator(0);
+
+        // Update the cart value on the UI
+        function updateCartValue() {
+          document.getElementById("cartValue").textContent = cart.value.toFixed(2);
+        }
+
+        // Event listener for the "Add to Cart" button
+        document.getElementById("addToCartBtn").addEventListener("click", function() {
+          cart.read();
+        });
+    </script>
+
+
+
+
+
+    <main>
+      <section> <!--область секции-->
+        <h2 id="Topic1">Тетрадб 12 листов</h2>
+        <h4>Стоимость:10 рублей</h4>
+      </section>
+
+      <section> <!--область секции-->
+        <h2 id="Topic2">Тетрадб 24 листов</h2>
+        <h4>Стоимость:15 рублей</h4>
+      </section>
+
+      <section> <!--область секции-->
+        <h2 id="Topic3">Тетрадб 48 листов</h2>
+        <h4>Стоимость:25 рублей</h4>
+      </section>
+
+    </main>
+  </body>
+</html>

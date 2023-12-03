@@ -1,0 +1,512 @@
+.shadows {
+display: flex;
+justify-content: space-around;
+height: 300px;
+
+}
+
+.card-content:hover{
+transform: scale(1.1);
+transition: transform 1s ease;
+filter: none;
+}
+
+
+.card-content {
+width: 200px;
+color: white;
+text-align: center;
+font-size: 30px;
+background: linear-gradient(to bottom left, blue, pink, purple);
+height: 300px;
+padding-top: 130px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+border-radius: 5px;
+filter: blur(3px);
+}
+.what{
+	font-size: 30px;
+}
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+
+
+.show {
+  display: flex;
+  justify-content: space-around;
+  height: 300px;
+}
+
+.card-number {
+  position: relative;
+  width: 200px;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  background: linear-gradient(to bottom right, red, blue);
+  height: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+@keyframes animatedLine {
+  0% {
+    transform: translateX(-25%);
+  }
+  100% {
+    transform: translateX(25%);
+  }
+}
+
+.number {
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 50px;
+}
+
+.card-number:hover .number {
+  opacity: 1.0;
+  color: cyan;
+	border-top: : 5px solid black;
+	border-bottom: 5px solid black;
+  border-radius: 5px;
+  pointer-events: none;
+  animation: animatedLine 2s linear infinite;
+}
+/*/////////////////////////////////////////////////////*/
+
+.card {
+  display: flex;
+  justify-content: space-around;
+  height: 300px;
+	width: 400px;
+  border-radius: 10px;
+	background: linear-gradient(to bottom right, cyan, blue, orange);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+	 transition: width 1.3s ease, height 1.3s ease;
+	 margin-bottom: 50px;
+}
+
+.card:hover {
+  width: 620px;
+  height: 320px;
+}
+
+.content {
+  position:relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+}
+
+.title {
+  margin-bottom: 10px;
+  color: white;
+  font-size: 24px;
+}
+
+.animation {
+  position: absolute;
+  top: 60%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.4);
+  animation: moveAnimation 4s linear infinite;
+	border-radius: 5px;
+}
+
+@keyframes moveAnimation {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-200%, -50%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+.card:hover .square {
+  animation-play-state: running;
+}
+
+.square {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(93,155,155, 0.8);
+  animation: moveAnimation 5s linear infinite;
+  animation-play-state: paused;
+}
+ .circle{
+	 position: absolute;
+	 top: 100%;
+	 right: 60%;
+	 width: 20px;
+	 height: 20px;
+	 border-radius: 25px;
+	 background-color: rgba(102,0,255, 0.3);
+	 animation: moveAnimation 1s linear infinite;
+
+ }
+
+.circle:hover::before{
+	content: "";
+	opacity: 0;
+}
+.circle:hover::after{
+	opacity:0;
+	content: "";
+}
+.circle:hover{
+	opacity:1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Reset CSS */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html,
+body {
+    display:block;
+		background: linear-gradient(to bottom right, pink, blue);
+		padding: 15px;
+}
+img {
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+
+
+/* Main CSS */
+.grid-wrapper > div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.grid-wrapper > div > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 5px;
+}
+.grid-wrapper > div > img:hover {
+    transform: scale(1.20);
+    transition: transform 1.3s;
+		z-index: 22222;
+}
+
+.grid-wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 200px;
+    grid-auto-flow: dense;
+    margin-bottom: 20vh;
+}
+.grid-wrapper .wide {
+	grid-column: span 2;
+}
+.grid-wrapper .tall {
+	grid-row: span 2;
+}
+.grid-wrapper .big {
+	grid-column: span 2;
+	grid-row: span 2;
+}
+
+/*///////////////////////////////////////////////////////////////////*/
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7vh 0;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 1.3s ease;
+}
+.form-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.form:hover, .form:focus {
+    transform: scale(1.1);
+}
+
+h2 {
+    text-align: center;
+    margin: 0;
+}
+
+.input-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.input, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 1.3s ease;
+			grid-column: span 2;
+}
+
+.submit-button:hover {
+    background: linear-gradient(to bottom left, cyan, purple);
+}
+
+#phone, #subject, #date {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#subject{
+	height: 80px;
+}
+/* Добавленные стили для новых полей при наведении */
+#phone:hover, #subject:hover, #date:hover {
+    border-color: #3498db;
+}
+@media (max-width: 768px) {
+    .form-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*////////////////////////////////////////////////////////////////////////////////////*/
+
+.footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    border-radius: 5px;
+
+}
+
+.footer-item:hover {
+    transform: scale(1.05);
+    transition: transform 1s;
+
+}
+
+.footer-item {
+    padding: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #444;
+    position: relative;
+		height: 300px;
+
+
+}
+
+.footer-item h3 {
+    margin: 0;
+    font-size: 1.2em;
+
+}
+
+.footer-item p {
+    margin: 0;
+}
+
+/* Псевдоэлементы для декорации */
+.footer-item::before,
+.footer-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #555;
+}
+
+.footer-item::before {
+    left: 0;
+}
+
+.footer-item::after {
+    right: 0;
+}
+
+
+/*2 задание*/
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10vh;
+		padding-top: 20px;
+}
+
+.social-button {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.social-button:hover {
+    transform: scale(1.1);
+}
+
+.social-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(to bottom, white, blue, red);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 2s ease;
+}
+
+.social-button:hover::before {
+    transform: scaleY(1);
+    height: 100%;
+}
+
+
+.social-button .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.social-button.facebook .icon {
+    background-image: url('https://w7.pngwing.com/pngs/10/139/png-transparent-vk-social-network-logo-rounded-social-media-icon.png');
+    background-size: cover;
+}
+
+.social-button.twitter .icon {
+    background-image: url('https://w7.pngwing.com/pngs/222/945/png-transparent-united-states-social-media-mashable-advertising-organization-instagram-logo-magenta-computer-icons.png');
+    background-size: cover;
+}
+
+.social-button.instagram .icon {
+    background-image: url('https://avatars.mds.yandex.net/i?id=311619248813b40fdb1c0f762aad1bb1ce38afe6-9303200-images-thumbs&ref=rim&n=33&w=200&h=200');
+    background-size: cover;
+}
+.info{
+	font-size: 25px;
+	padding-top: 60px
+}
+/*МЕДИЯ ЗАПРОСЫ*/
+@media (min-width: 713px) {
+    .form {
+        width: 400px;
+    }
+}
+
+@media (max-width: 712px) {
+    .form {
+        width: 90%;
+    }
+}
+@media (max-width: 768px) {
+    .footer {
+        grid-template-columns: 1fr;
+    }
+}

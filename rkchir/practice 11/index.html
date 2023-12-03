@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>practice 11</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="icon" href="img\icons11.png" />
+        <script src="https://kit.fontawesome.com/eccdc529c9.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container1">
+            <header>Корзина товаров</header>
+
+            <div id="cart" class="cart"> </div>
+        </div>
+        <div class="container2">
+            <div class="input_field captch_box">
+                <button onclick="addItem()"><i class="fa-sharp fa-solid fa-cart-plus"></i></i></button>
+            </div>
+            <div class="input_field captch_box">
+                <button onclick="clearCart()"><i class="fa-sharp fa-regular fa-trash-can"></i></button>
+            </div>
+            <div class="input_field captch_box">
+                <button onclick="increaseQuantity()"><i class="fa-sharp fa-solid fa-plus"></i></button>
+            </div>
+            <div class="input_field captch_box">
+                <button onclick="removeRandomItem()"><i class="fa-sharp fa-solid fa-broom"></i></button>
+            </div>
+            <div class="input_field captch_box">
+                <button onclick="filterItems()"><i class="fa-sharp fa-solid fa-filter"></i></button>
+            </div>
+            <div class="input_field captch_box">
+                <button onclick="sortItems(true)"><i class="fa-sharp fa-solid fa-arrow-up"></i></button>
+            </div>
+            <div class="input_field captch_box">
+                <button onclick="sortItems(false)"><i class="fa-sharp fa-solid fa-arrow-down"></i></i></button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

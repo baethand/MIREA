@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>practice 12</title>
+        <link rel="stylesheet" href="style.css" />
+    </head> 
+    <!-- Элемент уведомлений -->
+    <div id="notification" class="notification"></div>
+    <body>
+        <div class="container1">
+            <header>Ваши уведомления</header>
+            <!-- Контейнер для просмотра уведомлений -->
+            <div class="notifications-container" id="notificationsContainer">
+                <ul id="notificationsList"></ul>
+            </div>
+        </div>
+        <div class="container1">
+            <header>Ваш список</header>
+            <!-- Список, который будет создаваться динамически -->
+            <ul id="myList"></ul>
+        </div>
+        <div class="container2">
+            <div class="input_field captch_box">
+                <!-- Кнопка для остановки счетчика уведомлений -->
+                <button onclick="stopNotificationCounter()">Остановить</button>
+            </div>
+            <div class="input_field captch_box">
+                <!-- Кнопка для показа уведомлений -->
+                <button onclick="toggleNotifications()">Показать/Скрыть</button>
+            </div>
+            <div class="input_field captch_box">
+                <!-- Интерфейс для создания списка -->
+                <button onclick="createList()">Создать</button>
+            </div>
+        </div>
+    <script src="script.js"></script>
+    </body>
+</html>
