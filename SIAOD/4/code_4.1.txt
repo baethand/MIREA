@@ -1,0 +1,255 @@
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+
+
+
+//---------------- Общая часть ----------------//
+// 
+//----> Структура для узла дерева
+struct Node 
+{
+    char data;          //----> Информационная часть узла (символьное значение)
+    Node* left;         //----> Указатель на левое поддерево
+    Node* right;        //----> Указатель на правое поддерево
+
+    Node(char value) : data(value), left(nullptr), right(nullptr) {}
+};
+
+
+//----> Функция для построения идеально сбалансированного бинарного дерева
+Node* CreateTree(int n) 
+{
+    if (n <= 0) 
+    {
+        return nullptr;
+    }
+
+    int middle = n / 2; //----> Поиск среднего элемента
+    char data;
+    cout << "   Введите символьное значение для узла " << middle + 1 << ": ";
+    cin >> data;
+
+    Node* root = new Node(data);                    //----> Создание корневого узла
+    root->left = CreateTree(middle);                //----> Рекурсивное построение левого поддерева
+    root->right = CreateTree(n - middle - 1);       //----> Рекурсивное построение правого поддерева
+
+    return root;
+}
+
+
+//----> Функция для вывода дерева
+void PrintTree(Node* root, const string& prefix = "", bool left = true)
+{
+    if (root == nullptr) 
+    {
+        return;
+    }
+
+    if (root->right)
+    {
+        PrintTree(root->right, prefix + (left ? "|   " : "    "), false);
+    }
+
+    cout << prefix;
+    cout << (left ? "|-->" : "|-->");
+    cout << root->data << endl;
+
+    if (root->left)
+    {
+        PrintTree(root->left, prefix + (left ? "    " : "|   "), true);
+    }
+}
+
+
+//----> Функция удаления дерева после использования
+void DeleteTree(Node* root) 
+{
+    if (root == nullptr) 
+    {
+        return;
+    }
+
+    //----> Рекурсивное удаление левого и правого поддерева
+    DeleteTree(root->left);
+    DeleteTree(root->right);
+
+    //----> Удаление текущего узла
+    delete root;
+}
+//
+//---------------- Общая часть ----------------//
+
+
+
+
+//---------------- Часть варианта ----------------//
+//
+//----> Функция нахождения максимального значения среди значений листьев дерева
+char FindMax(Node* root) 
+{
+    if (root == nullptr) 
+    {
+        //----> Дерево пустое
+        return '\0';
+    }
+
+    if (root->left == nullptr && root->right == nullptr) 
+    {
+        //----> Листовой узел
+        if (isdigit(root->data))
+        {
+            return root->data;
+        }
+        return '\0';    //----> Если это не цифра
+    }
+
+    //----> Рекурсивный поиск максимального значения среди листьев в левом и правом поддеревьях
+    char leftMax = '\0';
+    char rightMax = '\0';
+
+    if (root->left)
+    {
+        leftMax = FindMax(root->left);
+    }
+
+    if (root->right)
+    {
+        rightMax = FindMax(root->right);
+    }
+
+    //----> Сравнение максимального значения в левом и правом поддеревьях
+    return max(leftMax, rightMax);
+}
+
+
+
+//----> Функция определения уровня, на котором находится заданное значение
+int FindLevel(Node* root, char value, int level = 1) 
+{
+    if (root == nullptr) 
+    {
+        return 0;   //----> Значение не найдено
+    }
+
+    if (root->data == value) 
+    {
+        return level;   //----> Значение найдено на текущем уровне
+    }
+
+    int leftLevel = FindLevel(root->left, value, level + 1);
+    if (leftLevel != 0) 
+    {
+        return leftLevel;   //----> Значение найдено в левом поддереве
+    }
+
+    int rightLevel = FindLevel(root->right, value, level + 1);
+    return rightLevel;  //----> Значение найдено в правом поддереве (или не найдено вообще)
+}
+
+
+//----> Функция определения количества цифр в правом поддереве исходного дерева
+int СountRight(Node* root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+
+    int count = 0;
+    int countLeft = 0;
+    int countRight = 0;
+
+    //----> Если это цифра
+    if (isdigit(root->data))
+    {
+        count++;
+    }
+
+    //----> Рекурсивный счет цифр в правом и левом поддеревьях
+    if (root->right)
+    {
+        count += СountRight(root->right);
+        count += СountRight(root->left);
+    }
+
+    return count;
+}
+//
+//---------------- Часть варианта ----------------//
+
+
+
+
+int main() 
+{
+    setlocale(LC_ALL, "ru");
+
+    int n;
+    cout << endl << "Введите количество узлов в дереве: ";
+    cin >> n;
+    cout << endl;
+
+    Node* root = CreateTree(n);
+
+    cout << endl << "Идеально сбалансированное бинарное дерево ~_~" << endl;
+    PrintTree(root);
+
+
+    bool flag = true;
+
+    int level = 0;
+    char maxNode = '0';
+    int digitCount = 0;
+    while (flag) 
+    {
+        int choice;
+        cout << endl << "Выберите действие: " << endl << "   1 - найти максимальное значение среди значений листьев дерева" << endl << "   2 - определить уровень, на котором находится заданное значение" << endl << "   3 - определить количества цифр в правом поддереве исходного дерева" << endl << "   4 - выйти из системы" << endl;
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            maxNode = FindMax(root);
+            if (maxNode == '\0')
+            {
+                cout << endl << "Цифр нет для сравнения" << endl;
+            }
+            else
+            {
+                cout << endl << "Максимальное значение среди листьев дерева: " << maxNode << endl;
+            }
+            break;
+        case 2:
+            char target;
+            cout << endl << "Введите значение для поиска уровня: ";
+            cin >> target;
+
+            level = FindLevel(root, target);
+            if (level > 0)
+            {
+                cout << "   Уровень, на котором находится значение " << target << ": " << level << endl;
+            }
+            else
+            {
+                cout << "   Значение " << target << " не найдено в дереве U_U" << endl;
+            }
+            break;
+        case 3:
+            digitCount = СountRight(root->right);
+            cout << endl << "Количество цифр в правом поддереве: " << digitCount << endl;
+            break;
+        case 4:
+            flag = false;
+            break;
+        default:
+            return 0;
+            break;
+        }
+    }
+
+    DeleteTree(root);
+
+    return 0;
+}

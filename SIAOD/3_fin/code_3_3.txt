@@ -1,0 +1,359 @@
+#include <unordered_map>//----> Непорядковое отображение (коллекция пар: ключ-значение)
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <chrono>
+#include <vector>
+#include <list>
+#include <set>
+
+using namespace std;
+
+
+//----> Структура записи - Страховой полис: номер полиса, компания, фамилия владельца
+struct InsurancePolicy
+{
+    unsigned long int number = 0;
+    string company;
+    string surname;
+};
+
+
+//----> Структура записи в хеш-таблице
+struct HashTableEntry
+{
+    unsigned long int key;
+    int index;
+};
+
+
+//----> Номер полиса, состоящий из 8 чисел
+unsigned long int Randomizer()
+{
+    unsigned long int min = 10000000;
+    unsigned long int max = 99999999;
+    return min + rand() % (max - min + 1);
+}
+
+
+//----> Хеш-функция методом деления
+int HashFun(unsigned long int key, int tableSize)
+{
+    return key % tableSize;
+}
+
+
+//----> Вставка ключа в таблицу
+void Insert(unordered_map<int, list<HashTableEntry>>& hashTable, unsigned long int key, int tableSize, int index)
+{
+    HashTableEntry entry;
+    entry.key = key;
+    entry.index = index;
+    int hash = HashFun(key, tableSize);
+    hashTable[hash].push_back(entry);
+}
+
+
+//----> Удаление ключа из таблицы и файла
+void Remove(unordered_map<int, list<HashTableEntry>>& hashTable, InsurancePolicy& policy, const string binary, unsigned long int key, int tableSize)
+{
+    int hash = HashFun(key, tableSize);
+    bool corr = false;
+
+    auto& entries = hashTable[hash];//----> Получение ссылки на список (цепь записей)
+
+    list<HashTableEntry> tempEntries;//----> Временная цепочка
+
+    for (auto it = entries.begin(); it != entries.end(); ++it)
+    {
+        if (it->key != key)
+        {
+            tempEntries.push_back(*it);//----> Удаление из хеш-таблицы
+        }
+        else if (it->key == key)
+        {
+            //----> Удаление из файла
+            corr = true;
+
+            cout << endl << "Начался процесс удаления записи из файла ^o^" << endl;
+            ofstream file(binary, ios::binary | ios::in | ios::out);
+            if (file)
+            {
+                file.seekp(it->index * sizeof(InsurancePolicy), ios::beg);
+
+                //----> Пустая запись
+                InsurancePolicy empty;
+                empty.number = 0;
+                empty.company = "";
+                empty.surname = "";
+                file.write(reinterpret_cast<char*>(&empty), sizeof(InsurancePolicy));
+                cout << "   Полученная запись удалена из файла ^.^" << endl;
+            }
+            file.close();
+        }
+    }
+    entries = tempEntries;
+    if (corr == false)
+        cout << endl << "Полис не удалось удалить из файла U_U" << endl;
+}
+
+
+//----> Поиск ключа в таблице и файле
+void Find(const unordered_map<int, list<HashTableEntry>>& hashTable, InsurancePolicy& policy, const string& binary, unsigned long int key, int tableSize)
+{
+    int hash = HashFun(key, tableSize);
+    bool corr = false;
+
+    //----> Проверка существования ключа в таблице
+    auto it = hashTable.find(hash);
+    if (it != hashTable.end())
+    {
+        //----> Получение ссылки на цепь записей
+        auto& entries = it->second;
+
+        for (const HashTableEntry& entry : entries)
+        {
+            if (entry.key == key)
+            {
+                cout << endl << "Страховой полис найден в таблице ^o^" << endl;
+                ifstream file(binary, ios::binary);
+                if (file)
+                {
+                    cout << "   Получаем запись из файла ^.^" << endl;
+                    corr = true;
+
+                    file.seekg(entry.index * sizeof(InsurancePolicy), ios::beg);
+                    if (file.read(reinterpret_cast<char*>(&policy), sizeof(InsurancePolicy)))
+                    {
+                        cout << "   Номер полиса ---> " << policy.number << endl;
+                        cout << "   Компания ---> " << policy.company << endl;
+                        cout << "   Фамилия владельца ---> " << policy.surname << endl;
+                    }
+                }
+                file.close();
+                return;
+            }
+            else
+                corr = false;
+        }
+    }
+    if (corr == false)
+        cout << endl << "Страховой полис не найден в файле U_U" << endl;
+}
+
+
+//----> Рехеширование таблицы
+void Rehash(unordered_map<int, list<HashTableEntry>>& hashTable, int newTableSize)
+{
+    unordered_map<int, list<HashTableEntry>> newHashTable(newTableSize);
+    for (const auto& entry : hashTable)//----> Проход по всем элементам хеш-таблицы
+    {
+        for (const HashTableEntry& hashEntry : entry.second)//----> Проход по всем записям хеша
+        {
+            int newHash = HashFun(hashEntry.key, newTableSize);
+            newHashTable[newHash].push_back(hashEntry);
+        }
+    }
+    hashTable = newHashTable;
+}
+
+
+//----> Определение простого числа
+bool IsPrime(int n)
+{
+    if (n <= 1)
+    {
+        return false;
+    }
+    if (n <= 3)
+    {
+        return true;
+    }
+    if (n % 2 == 0 || n % 3 == 0)
+    {
+        return false;
+    }
+    for (int i = 5; i * i <= n; i += 6)
+    {
+        if (n % i == 0 || n % (i + 2) == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+int CalculateSize(int currentSize)
+{
+    //----> Умножение текущего размера на некоторый множитель
+
+    int newSize = currentSize * 2;
+    //----> Проверка на простое число, чтобы уменьшить вероятность коллизий
+    while (!IsPrime(newSize))
+    {
+        newSize++;
+    }
+    return newSize;
+}
+
+
+void Output(unordered_map<int, list<HashTableEntry>>& hashTable)
+{
+    //----> Вывод списка хеш-кода и ключа
+    cout << endl << "После изменения ~_~" << endl;
+    for (const auto& entry : hashTable)
+    {
+        int hash = entry.first;//----> Получение хеш-кода
+        const list<HashTableEntry>& entries = entry.second;//----> Получение списка записей
+        for (const HashTableEntry& hashEntry : entries)
+        {
+            unsigned long int key = hashEntry.key;//----> Получение ключа
+            printf("   Индекс записи:  %3d   Ключ:  %8d   Хеш:  %2d\n", hashEntry.index, key, hash);
+        }
+    }
+}
+
+
+int main()
+{
+    //----> ЗАДАНИЕ 3.3
+
+    setlocale(LC_ALL, "ru");
+    srand(static_cast<unsigned int>(time(nullptr)));//----> Инициализация генератора
+    const string text = "textFile.txt";
+    const string binary = "binaryFile.bin";
+
+    ofstream textFile(text);//----> Текстовый файл
+    if (!textFile)
+    {
+        cout << "Текстовый файл не удалось открыть для записи +_+" << endl;
+        return 1;
+    }
+    cout << "Текстовый файл успешно открыт для записи ^_^" << endl << endl;
+
+    //----> Открываем файл для записи в бинарном режиме (флаг - ios::binary)
+    ofstream binaryFileOut(binary, ios::binary);//----> Бинарный файл
+    if (!binaryFileOut)
+    {
+        cerr << "Бинарный файл не удалось открыть для записи +_+" << endl;
+        return 1;
+    }
+    cout << "Бинарный файл успешно открыт для записи ^_^" << endl << endl;
+
+    int quant = 30001;//----> Количество записей
+    set<int> unique;
+
+    InsurancePolicy policy;
+    for (int i = 0; i < quant; ++i)
+    {
+        do {
+            policy.number = Randomizer();
+        } while (unique.count(policy.number) > 0);
+        unique.insert(policy.number);
+        policy.company = "Компания_" + to_string(i);
+        policy.surname = "Фамилия_" + to_string(i);
+
+        textFile << policy.number << ' ' << policy.company << ' ' << policy.surname << '\n';
+
+        binaryFileOut.write(reinterpret_cast<const char*>(&policy), sizeof(policy));
+    }
+    cout << "Генерация текстового и бинарного файла завершена ^_^" << endl;
+
+    size_t bytes = sizeof(InsurancePolicy);
+    cout << "Размер записи в байтах: " << bytes << endl;
+    cout << "Количество записей: " << quant << endl << endl;
+
+    textFile.close();
+    binaryFileOut.close();
+
+    int tableSize = 101;//----> Размер хеш-таблицы
+    unordered_map<int, list<HashTableEntry>> hashTable;//----> Создание хеш-таблицы с цепочками
+
+    //----> Добавляем элементы в хеш-таблицу
+    ifstream binaryFileIn(binary, ios::binary);
+    if (!binaryFileIn)
+    {
+        cout << "Бинарный файл не удалось открыть для чтения +_+" << endl;
+        return 1;
+    }
+    cout << "Бинарный файл успешно открыт для чтения ^_^" << endl << endl;
+
+    cout << "   Проверка хеш-индексов >.<" << endl << endl;
+    int index = 0;
+    while (binaryFileIn.read(reinterpret_cast<char*>(&policy), sizeof(policy)))
+    {
+        //----> Создание записи для хеш-таблицы
+        HashTableEntry entry;
+        entry.key = policy.number;
+        entry.index = index;
+        index++;
+        int hash = HashFun(entry.key, tableSize);//----> Вычисление хеш-кода для ключа
+        hashTable[hash].push_back(entry);//----> Добавление записи в цепочку хеш-таблицы
+
+        printf("   Индекс записи:  %3d   Ключ:  %2d   Хеш:  %2d\n", entry.index, entry.key, hash);
+    }
+    binaryFileIn.close();
+
+    //----> Фактор заполнения (проверка при создании файла)
+    double loadFactor = static_cast<double>(hashTable.size()) / tableSize;
+    if (loadFactor > 0.8)
+    {
+        int newTableSize = CalculateSize(tableSize);//----> Определение нового размера таблицы
+        tableSize = newTableSize;
+        Rehash(hashTable, tableSize);
+    }
+
+    bool flag = true;
+    auto start_time = chrono::high_resolution_clock::now();
+    auto end_time = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(end_time - start_time);
+    while (flag)
+    {
+        int choice;
+        cout << endl << "Выберите действие со структурой: " << endl << "   1 - вставка ключа в таблицу" << endl << "   2 - поиск ключа в файле" << endl << "   3 - удаление ключа из файла и таблицы" << endl << "   4 - выход из тестирования" << endl;
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            unsigned long int insert;
+            cout << "Введите номер полиса, который вы желаете добавить (8 чисел) ---> ";
+            cin >> insert;
+            Insert(hashTable, insert, tableSize, index);
+            loadFactor = static_cast<double>(hashTable.size()) / tableSize;
+            if (loadFactor > 0.8)
+            {
+                int newTableSize = CalculateSize(tableSize);//----> Определение нового размера таблицы
+                tableSize = newTableSize;
+                Rehash(hashTable, newTableSize);
+            }
+            Output(hashTable);
+            break;
+        case 2:
+            unsigned long int found;
+            cout << "Введите номер полиса, который вы желаете найти (8 чисел) ---> ";
+            cin >> found;
+            start_time = chrono::high_resolution_clock::now();
+
+            Find(hashTable, policy, binary, found, tableSize);
+
+            end_time = chrono::high_resolution_clock::now();
+            duration = chrono::duration_cast<chrono::microseconds>(end_time - start_time);
+            cout << endl << " Время выполнения: " << duration.count() << " [мкс]" << endl;
+            break;
+        case 3:
+            unsigned long int remove;
+            cout << "Введите номер полиса, который вы желаете удалить (8 чисел) ---> ";
+            cin >> remove;
+            Remove(hashTable, policy, binary, remove, tableSize);
+            Output(hashTable);
+            break;
+        case 4:
+            flag = false;
+            break;
+        default:
+            break;
+        }
+    }
+    return 0;
+}

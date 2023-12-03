@@ -35,6 +35,6 @@ def main():
             elif commands[0] == "exit":
                 break
             else:
-                print("Command is not recognized")
+                print("Команда не предусмотрена")
         
 main()

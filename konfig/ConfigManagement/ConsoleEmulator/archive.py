@@ -1,8 +1,8 @@
 import os
 import calendar as c
 
-
 class Archive:
+
     def __init__(self, zip):
         self.zip = zip
         self.namelist = zip.namelist()
@@ -17,7 +17,6 @@ class Archive:
             else:
                 self.infodict[data.filename] = data
         
-
         self.setNamePath = {}
         for name in self.namelist:
             if name == self.currentDir:
@@ -36,7 +35,6 @@ class Archive:
                 print(*catalog, sep='    ', end='\n')
                 # print("ZipFile: {}".format(self.zip.getinfo(path)))
 
-
             elif commands[1] == '-l':
                 if len(commands) > 2:
                     dir = self.clearPatn(commands[2])
@@ -53,7 +51,6 @@ class Archive:
                         print(e)    
 
         else:
-            
             catalog = self.chooseItemInDir(self.currentDir)
             print(*catalog, sep='    ', end='\n')
 
@@ -66,9 +63,9 @@ class Archive:
             return
         try:
             with self.zip.open(dir) as myfile:
-                print(myfile.read())
+                print(myfile.read().decode('utf-8'))
         except Exception as e:
-            print(f"{dir} is not file")
+            print(f"{dir} не является файлом")
 
     def chooseItemInDir(self, directory):
         partsPath = cutPath(directory)
@@ -85,6 +82,7 @@ class Archive:
 
     def allPath(self):
         print(self.namelist)
+    
     def getAll(self):
         for data in self.infolist:
             print(data)
@@ -92,7 +90,6 @@ class Archive:
     def comeDirectory(self, path):
         if path == "/":
             self.currentDir = self.rootDir
-
         elif path == "..":
             path = self.currentDir
             parts = path.split("/")
@@ -102,14 +99,13 @@ class Archive:
             for i in range (len(parts)-2):
                 newPath += parts[i] + '/'
             self.currentDir = newPath
-            
         else:
             try:
                 dir = self.clearPatn(path)
                 if (dir in self.namelist) and not "." in dir:
                     self.currentDir = dir
                 else:
-                    raise ValueError(f"Cannot access '{dir}': No such file or directory")
+                    raise ValueError(f"Не удается получить доступ к '{dir}': Нет такого файла или каталога")
             except Exception as e:
                 print(e)
 
@@ -121,7 +117,7 @@ class Archive:
         elif path[0] != "/":
             dir =  os.path.join(self.currentDir, path)
         else: 
-            raise ValueError(f"Cannot access '{path}': No such file or directory")
+            raise ValueError(f"Не удается получить доступ к '{path}': Нет такого файла или каталога")
         return dir
 
     def normalizePath(self, path):

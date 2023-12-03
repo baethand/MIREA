@@ -1,0 +1,85 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.1\EfremovaP\Q41\simulation\qsim
+vQ41
+Z1 !s100 O^<g4Se05gFIM52gR2cOR0
+Z2 Ig8a?24L[UQzK=fo94NMbV2
+Z3 VZ6IACHHI[HmnccR?czZh<0
+Z4 dC:\_gitHub\MIREA\AVM\Q41\simulation\qsim
+Z5 w1701083869
+Z6 8Q41.vo
+Z7 FQ41.vo
+L0 31
+Z8 OV;L;10.1d;51
+r1
+31
+Z9 !s90 -work|work|Q41.vo|
+Z10 o-work work -O0
+n@q41
+!i10b 1
+!s85 0
+Z11 !s108 1701083869.707000
+Z12 !s107 Q41.vo|
+!s101 -O0
+vQ41_vlg_check_tst
+!i10b 1
+Z13 !s100 7K46oJ0gDkN0bJf@R;3gH3
+Z14 IOT@fJ1nVNPE0mgRjQ0iAa1
+Z15 VQPSaPFX7fbSAcTH7oO1QV0
+R4
+Z16 w1701083868
+Z17 8Waveform.vwf.vt
+Z18 FWaveform.vwf.vt
+L0 61
+R8
+r1
+!s85 0
+31
+Z19 !s108 1701083869.754000
+Z20 !s107 Waveform.vwf.vt|
+Z21 !s90 -work|work|Waveform.vwf.vt|
+!s101 -O0
+R10
+Z22 n@q41_vlg_check_tst
+vQ41_vlg_sample_tst
+!i10b 1
+Z23 !s100 Cc?a@m_h:CnNl^ELV@_h@3
+Z24 IA8zzHSg=KEQBH=PSbRKLg1
+Z25 V3Dd7QdSWcNohzXFc3VEeQ0
+R4
+R16
+R17
+R18
+L0 29
+R8
+r1
+!s85 0
+31
+R19
+R20
+R21
+!s101 -O0
+R10
+Z26 n@q41_vlg_sample_tst
+vQ41_vlg_vec_tst
+!i10b 1
+Z27 !s100 ;ZKmf6?dMzOcKHEQ56=:N1
+Z28 Ie<MgfdIFQ8dUNzS1o>A2[2
+Z29 V[mX8c0gQWk5V^J<fojW>21
+R4
+R16
+R17
+R18
+Z30 L0 209
+R8
+r1
+!s85 0
+31
+R19
+R20
+R21
+!s101 -O0
+R10
+Z31 n@q41_vlg_vec_tst

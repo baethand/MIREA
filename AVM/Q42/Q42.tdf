@@ -1,0 +1,48 @@
+SUBDESIGN 'Q42'
+(
+    a, b, clock : input;
+    q[3..0] : output;
+)
+
+VARIABLE
+st[0..15],  r[0..5], newq[0..3], na, nb, nq[3..0]: NODE;
+reg[0..3] : DFF;
+
+BEGIN
+ na= (not(a));
+ nb= (not(b));
+ nq[3..0]= (not(q[3..0]));
+ st0= (nq0 and nq1 and nq2 and nq3);
+ st1= (q0 and nq1 and nq2 and nq3);
+ st2= (nq0 and q1 and nq2 and nq3);
+ st3= (q0 and q1 and nq2 and nq3);
+ st4= (nq0 and nq1 and q2 and nq3);
+ st5= (q0 and nq1 and q2 and nq3);
+ st6= (nq0 and q1 and q2 and nq3);
+ st7= (q0 and q1 and q2 and nq3);
+ st8= (nq0 and nq1 and nq2 and q3);
+ st9= (q0 and nq1 and nq2 and q3);
+ st10= (nq0 and q1 and nq2 and q3);
+ st11= (q0 and q1 and nq2 and q3);
+ st12= (nq0 and nq1 and q2 and q3);
+ st13= (q0 and nq1 and q2 and q3);
+ st14= (nq0 and q1 and q2 and q3);
+ st15= (q0 and q1 and q2 and q3);
+ 
+ r0= (na and st8);
+ r1= (a and st8);
+ r2= (nb and st5);
+ r3= (b and st5);
+ r4= (nb and st2);
+ r5= (b and st2);
+ 
+ newq0= (r0 or st0 or r3 or st10 or st11 or st6 or r4 or r5 or st12 or st15);
+ newq1= (r0 or r1 or r2 or r3 or st10 or st4 or st6 or st14 or st12 or st15);
+ newq2= (r1 or st0 or r3 or st11 or st13 or st4 or st6 or st9 or st1);
+ newq3= (st7 or r1 or r2 or r3 or st10 or st11 or r4 or st9 or st12 or st15 or st1);
+ 
+ q0= DFF(newq0, clock,,);
+ q1= DFF(newq1, clock,,);
+ q2= DFF(newq2, clock,,);
+ q3= DFF(newq3, clock,,);
+END;

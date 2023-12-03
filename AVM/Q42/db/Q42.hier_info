@@ -1,0 +1,16 @@
+|Q42
+a => na.IN0
+a => r[1].IN0
+b => nb.IN0
+b => r[3].IN0
+b => r[5].IN0
+clock => $00000.CLK
+clock => $00001.CLK
+clock => $00002.CLK
+clock => $00003.CLK
+q[0] <= $00000.DB_MAX_OUTPUT_PORT_TYPE
+q[1] <= $00001.DB_MAX_OUTPUT_PORT_TYPE
+q[2] <= $00002.DB_MAX_OUTPUT_PORT_TYPE
+q[3] <= $00003.DB_MAX_OUTPUT_PORT_TYPE
+
+
