@@ -1,0 +1,480 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+// Структура Данных
+struct LibraryNote {
+    char fio[30];
+    int number;
+    char address[30];
+};
+
+int add_bin_file(string filename) {
+    ofstream file(filename, ios::out | ios::binary | ios::app);
+
+    LibraryNote note;
+    cout << "Введите информацию о читальском абонименте:\n";
+    cout << "ФИО: ";
+    cin.ignore();
+    cin.getline(note.fio, sizeof(note.fio));
+
+    cout << "Номер (5 цифр): ";
+    cin >> note.number;
+
+    cout << "Адрес: ";
+    cin.ignore();
+    cin.getline(note.address, sizeof(note.address));
+
+    file.write(reinterpret_cast<const char*>(&note), sizeof(LibraryNote));
+    file.close();
+
+    return note.number; // Возвращаем номер читательского абонемента
+}
+
+// Функция для получения индекса последней записи в бинарном файле
+int getLastRecordIndex(string filename) {
+    ifstream file(filename, ios::binary | ios::ate);
+    if (!file.is_open()) {
+        return 0; // Если файл не открыт, возвращаем 0
+    }
+
+    int size = file.tellg(); // Получаем текущую позицию (размер файла)
+    file.close();
+
+    int recordSize = sizeof(LibraryNote); // Размер одной записи
+    return size / recordSize; // Возвращаем индекс последней записи
+}
+
+// Функция для вывода информации о машине по указанному индексу в бинарном файле
+void printAtIndex(string filename, int index) {
+    ifstream file(filename, ios::binary);
+    if (!file.is_open()) {
+        cout << "Ошибка при открытии файла.\n";
+        return;
+    }
+
+    LibraryNote note;
+    file.seekg(index * sizeof(LibraryNote)); // Перемещаем указатель на нужную позицию
+    file.read(reinterpret_cast<char*>(&note), sizeof(LibraryNote));
+
+    cout << "Информация о машине с индексом " << index + 1 << ":\n";
+    cout << "ФИО: " << note.fio << endl;
+    cout << "Номер: " << note.number << endl;
+    cout << "Адрес: " << note.address << endl;
+
+    file.close();
+}
+
+// Функция для вывода содержимого бинарного файла с информацией об абониментах
+void print_bin_file(string filename) {
+    ifstream file(filename, ios::binary);
+    if (!file.is_open()) {
+        cout << "Ошибка при открытии файла.\n";
+        return;
+    }
+
+    LibraryNote note;
+    cout << "Содержимое бинарного файла с информацией об абониментах:\n";
+    while (file.read(reinterpret_cast<char*>(&note), sizeof(LibraryNote))) {
+        cout << "ФИО: " << note.fio << " Номер: " << note.number << " Адрес: " << note.address << endl;
+    }
+
+    file.close();
+}
+
+// Функция для создания бинарного файла с информацией об абониментах из текстового файла
+void create_bin_file(string fText, string fBin) {
+    ifstream inputFile(fText);
+    if (!inputFile.is_open()) {
+        cout << "Ошибка при открытии текстового файла.\n";
+        return;
+    }
+
+    ofstream outputFile(fBin, ios::binary);
+    if (!outputFile.is_open()) {
+        cout << "Ошибка при создании бинарного файла.\n";
+        return;
+    }
+
+    LibraryNote note;
+    while (inputFile.getline(note.fio, sizeof(note.fio)) && inputFile >> note.number && inputFile.ignore() && inputFile.getline(note.address, sizeof(note.address))) {
+        outputFile.write(reinterpret_cast<const char*>(&note), sizeof(LibraryNote));
+    }
+
+    inputFile.close();
+    outputFile.close();
+    cout << "Бинарный файл успешно создан из текстового файла.\n";
+}
+
+// Подсчёт элементов в бинарном файле
+int count_elements(string filename) {
+    ifstream fb(filename, ios::binary);
+    if (!fb) {
+        cerr << "Unable to open the binary file." << endl;
+        return -1; // Возвращаем -1 в случае ошибки
+    }
+
+    fb.seekg(0, ios::end); // Перемещаемся в конец файла
+    streampos fileSize = fb.tellg(); // Получаем размер файла
+    fb.seekg(0, ios::beg); // Перемещаемся в начало файла
+
+    int count = 0;
+    while (fb.tellg() < fileSize) {
+        LibraryNote x;
+        if (fb.read(reinterpret_cast<char*>(&x), sizeof(LibraryNote))) {
+            count++;
+        }
+    }
+
+    fb.close();
+    return count;
+}
+
+// Функция для зануления лицензионного номера по индексу
+void DeleteAtIndex(const string& filename, int index) {
+    // Открываем бинарный файл для чтения и записи
+    fstream file(filename, ios::in | ios::out | ios::binary);
+
+    if (!file) {
+        cerr << "Ошибка открытия файла" << endl;
+    }
+
+    // Определяем размер одной записи
+    size_t record_size = sizeof(LibraryNote);
+
+    // Перемещаем указатель файла к нужной записи
+    file.seekp(index * record_size + sizeof(char) * 30, ios::beg);
+
+    // Зануляем лицензионный номер в записи
+    int zero = 0;
+    file.write(reinterpret_cast<char*>(&zero), sizeof(int));
+
+    file.close();
+}
+
+//====================TREE
+bool isInt(const string& str) {
+    for (char c : str) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void moveForwardNLines(ifstream& file, int n) {
+    for (int i = 0; i < n; ++i) {
+        string line;
+        if (!getline(file, line)) {
+            // Выход из цикла, если достигнут конец файла раньше
+            break;
+        }
+    }
+}
+
+// Структура для узла бинарного дерева поиска
+struct Node {
+    string Number; // Номер
+    int key; // Позиция в файле
+    Node* left;
+    Node* right;
+
+    Node(const string& number, int k) : Number(number), key(k), left(nullptr), right(nullptr) {}
+};
+
+class BinarySearchTree {
+public:
+    BinarySearchTree() : root(nullptr) {}
+
+    // Метод для включения элемента в дерево
+    void insert(const string& carNumber, int key) {
+        root = insertRecursive(root, carNumber, key);
+    }
+
+    // Метод для поиска ключа по номеру машины
+    int search(const string& Number) {
+        return searchRecursive(root, Number);
+    }
+
+    void print(Node* node, int level = 0) {
+        return display_tree(node, level);
+    }
+
+    // Метод для получения указателя на корень дерева
+    Node* getRoot() {
+        return root;
+    }
+
+    Node* insert(Node* current, const string& Number, int key) {
+        return insertRecursive(current, Number, key);
+    }
+
+    Node* remove(Node* current, const string& Number) {
+        return removeRecursive(current, Number);
+    }
+
+private:
+    Node* root;
+
+    // Рекурсивный метод для поиска ключа по номеру
+    int searchRecursive(Node* current, const string& Number) {
+        if (current == nullptr) {
+            return -1; // Номер не найден
+        }
+
+        if (Number == current->Number) {
+            return current->key; // Возвращаем ключ (индекс)
+        }
+
+        else if (Number < current->Number) {
+            return searchRecursive(current->left, Number);
+        }
+
+        else {
+            return searchRecursive(current->right, Number);
+        }
+    }
+
+    // Рекурсивный метод для включения элемента в дерево
+    Node* insertRecursive(Node* current, const string& Number, int key) {
+        if (current == nullptr) {
+            return new Node(Number, key);
+        }
+
+        if (Number < current->Number) {
+            current->left = insertRecursive(current->left, Number, key);
+        }
+        else if (Number > current->Number) {
+            current->right = insertRecursive(current->right, Number, key);
+        }
+
+        return current;
+    }
+
+    // Рекурсивный метод для удаления ключа из дерева
+    Node* removeRecursive(Node* current, const string& carNumber) {
+        if (current == nullptr) {
+            return current;
+        }
+
+        if (carNumber < current->Number) {
+            current->left = removeRecursive(current->left, carNumber);
+        }
+        else if (carNumber > current->Number) {
+            current->right = removeRecursive(current->right, carNumber);
+        }
+        else {
+            // Найден ключ (номер) который нужно удалить
+            if (current->left == nullptr) {
+                Node* temp = current->right;
+                delete current;
+                return temp;
+            }
+            else if (current->right == nullptr) {
+                Node* temp = current->left;
+                delete current;
+                return temp;
+            }
+
+            // У узла есть два детей
+            Node* temp = findMinNode(current->right);
+            current->Number = temp->Number;
+            current->right = removeRecursive(current->right, temp->Number);
+        }
+
+        return current;
+    }
+
+    Node* findMinNode(Node* node) {
+        while (node->left != nullptr) {
+            node = node->left;
+        }
+        return node;
+    }
+
+
+    void display_tree(Node* node, int level = 0) {
+        if (node == nullptr) {
+            if (level == 0) {
+                cout << "Дерево было удалено." << endl;
+            }
+            return;
+        }
+
+        display_tree(node->right, level + 1);
+        cout << string(level * 4, ' ') << "-> " << node->Number << endl;
+        display_tree(node->left, level + 1);
+    }
+
+};
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    string filename = "LibraryNote_data.txt";
+    BinarySearchTree tree;
+
+    while (true)
+    {
+
+        int c;
+        cout << "\n================================ \
+            \n[ 1 ] - Создать дерево \
+            \n[ 2 ] - Найти владельца по номеру \
+            \n[ 3 ] - Вывести файл \
+            \n[ 4 ] - Показать дерево \
+            \n[ 5 ] - Добавить узел \
+            \n[ 6 ] - Удалить узел \
+            \n[ 0 ]  Выход\n================================\n>";
+        cin >> c;
+
+        switch (c)
+        {
+        case 1:
+        {
+            int key = 0;
+            string Number;
+            string line;
+            // Открываем файл для чтения
+            ifstream file(filename);
+            if (!file.is_open()) {
+                cerr << "\nFailed to open file." << endl;
+                return 1;
+            }
+
+            // Созадме дерево
+            while (getline(file, line)) {
+                if (isInt(line))
+                {
+                    Number = line;
+                    key++;
+                    tree.insert(Number, key);
+                }
+
+            }
+            file.close();
+            cout << "\nДерево создано.";
+            break;
+        }
+        case 2:
+        {
+            string searchNumber;
+            string line;
+            string line2;
+            string Number;
+
+            cout << "\nВведите номер читательского билета: ";
+            cin >> searchNumber;
+
+            // Поиск номера машины
+            int searchKey = tree.search(searchNumber);
+
+            // if для поулчения данных по ключу из файла и вывода
+            if (searchKey != -1) {
+                cout << "\nНомер " << searchNumber << " найден на позиции " << searchKey << endl;
+
+                // Теперь вы можете открыть файл с данными и перейти к нужной позиции (ключу) для получения данных
+                ifstream dataFile("LibraryNote_data.txt");
+                moveForwardNLines(dataFile, searchKey * 3 - 3); // Смещаем к индексу в файле
+                getline(dataFile, line2); 
+                getline(dataFile, line);
+                getline(dataFile, line);
+                cout << "О Владельце: " << line << ", " << line2 << endl;
+                dataFile.close();
+            }
+            else {
+                cout << "\nNumber " << searchNumber << " not found in the tree." << endl;
+            }
+
+            break;
+
+        }
+        case 3:
+        {
+            // Открываем файл для чтения
+            ifstream file(filename);
+            if (!file.is_open()) {
+                cerr << "\nFailed to open file." << endl;
+                return 1;
+            }
+
+            string line;
+
+            cout << endl;
+
+            // Выводим файл в консоль
+            while (getline(file, line)) {
+                cout << line << endl;
+            }
+            break;
+        }
+        case 4:
+        {
+            tree.print(tree.getRoot());
+            break;
+        }
+        case 5:
+        {
+            string num;
+            string name;
+            string address;
+            cout << "\nВведите номер: ";
+            cin >> num;
+            cout << "\nВведите имя владельца: ";
+            cin >> name;
+            cout << "\nВведите адрес: ";
+            cin >> address;
+
+            // Добавляем в файл:
+            ofstream file(filename, ios::app); // Открываем файл для добавления данных (append)
+
+            if (!file.is_open()) {
+                cerr << "Не удалось открыть файл." << endl;
+                return 1;
+            }
+
+            // Записываем строку в конец файла
+            file << name << endl;
+            file << num << endl;
+            file << address << endl;
+            file.close();
+
+            ifstream file2(filename);
+            if (!file2.is_open()) {
+                cerr << "\nFailed to open file." << endl;
+                return 1;
+            }
+
+            string line;
+            int cnt = 0;
+            // Созадме дерево
+            while (getline(file2, line)) {
+                cnt++;
+            }
+
+            file2.close();
+            tree.insert(tree.getRoot(), num, cnt);
+
+            cout << "\nДобавлен!";
+            break;
+        }
+        case 6: {
+            string searchNumber;
+            string line;
+            string line2;
+            string carNumber;
+
+            cout << "\nВведите номер для удаления: ";
+            cin >> searchNumber;
+
+            // Удаление
+            tree.remove(tree.getRoot(), searchNumber);
+            cout << "\nУдален!";
+            break;
+        }
+        case 0: return 0;
+        default:
+            break;
+        }
+    }
+}
