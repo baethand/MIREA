@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">WeightCalculator</string>
+    <string-array name="edIzmereniya">
+        <item>kt</item>
+        <item>g</item>
+        <item>kg</item>
+        <item>centners</item>
+        <item>tonns</item>
+        <item>pound</item>
+        <item>unci</item>
+    </string-array>
+</resources>
