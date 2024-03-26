@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCalculate;
     private Spinner spinner;
     private EditText poleVvoda;
+    Button goInfoActivity;
 
 
     @Override
@@ -39,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         btnCalculate = findViewById(R.id.btnCalculate);
         spinner = findViewById(R.id.spinner);
         poleVvoda = findViewById(R.id.poleVvoda);
+        goInfoActivity = findViewById(R.id.btn_info);
 
-        Button goInfoActivity = findViewById(R.id.btn_info);
         goInfoActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,16 +92,23 @@ public class MainActivity extends AppCompatActivity {
                             ideal = 0;
                             break;
                     }
-
-                    textView1.setText(String.valueOf(ideal / 0.0002) + " кт");
-                    textView2.setText(String.valueOf(ideal / 0.001) + " г");
-                    textView3.setText(String.valueOf(ideal) + " кг");
-                    textView4.setText(String.valueOf(ideal / 100) + " ц");
-                    textView5.setText(String.valueOf(ideal / 1000) + " тонн");
-                    textView6.setText(String.valueOf(ideal / 0.45359200000017) + " фунтов");
-                    textView7.setText(String.valueOf(ideal / 0.0283495) + " унции");
+                    Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                    intent.putExtra("result", setRes(ideal));
+                    startActivity(intent);
                 }
             }
         });
+    }
+
+    public String setRes(float ideal){
+        String result = String.valueOf(ideal / 0.0002) + " кт" + "\n" +
+                String.valueOf(ideal / 0.001) + " г" + "\n" +
+                String.valueOf(ideal) + " кг" + "\n" +
+                String.valueOf(ideal / 100) + " ц" + "\n" +
+                String.valueOf(ideal / 1000) + " тонн" + "\n" +
+                String.valueOf(ideal / 0.45359200000017) + " фунтов" + "\n" +
+                String.valueOf(ideal / 0.0283495) + " унции" + "\n";
+
+        return result;
     }
 }
