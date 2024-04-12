@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css?family=SF+Pro+Display');
+
+
+
+main {
+    padding-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1240px;
+    margin-bottom: 120px;
+    font-family: 'SF Pro Display', sans-serif;
+}
+
+img#phoneTitle {
+    object-fit:cover;
+    width:27%;
+    height: 150px;
+    border-radius: 30px;
+    margin-left: 70px;
+    box-shadow: -20px 0px 25px 0px rgba(0, 0, 0, 0.1);
+}
+
+.iphone_main {
+    margin: 5px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    background-image: url(../image/phone/iphone_background.jpg);
+    background-size: cover;
+    height: 600px;
+    padding: 30px;
+    padding-left: 50px;
+    border-radius: 40px;
+    
+    position: relative;
+    box-shadow: 0px 50px 40px 0px rgba(0, 0, 0, 0.3);
+}
+
+.iphone_main div {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 40px;
+}
+
+.iphone_main h1 {
+	font-size: 55px;
+}
+
+.iphone_main p {
+    font-size: 27px;
+    width: 70%;
+}
+
+.iphone_main p, .iphone_main h1 {
+    color: rgb(223, 218, 208);
+    text-shadow: 0px 0px 7px black;
+}
+
+main h2{
+    font-size: 36px;
+}
+
+p {
+    font-size: 26px;
+}
+
+.floatRight {
+    object-fit:cover;
+    float: right;
+    width: 40%;
+    filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.3));
+    border-radius: 20px;
+    height: auto;
+    margin: 30px;
+}
+
+.floatLeft {
+    object-fit:cover;
+    float: left;
+    width: 40%;
+    filter: drop-shadow(0px 0px 6px rgba(0,0,0,0.3));
+    border-radius: 20px;
+    height: auto;
+    margin: 30px;
+}
+
+.containerOS{
+    margin-top: 30px;
+    display: flex;
+    list-style-type: none;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px;
+    align-items: center;
+}
+
+.osImg {
+    padding: 10px;
+    height: 200px;
+    border-radius: 20px;
+    box-shadow: 0 0px 10px 4px rgba(0, 0, 0, 0.2);
+}
+
+h2#TitleGallery {
+    text-align: center;
+}
+
+.phoneGallery{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.phoneImg {
+    width: 80%;
+    border-radius: 20px;
+    margin: 30px;
+}
+
+
+
+@media (max-width: 1300px) {
+	main {
+        width: 90%;
+    }
+
+    .containerOS{
+        justify-content: flex-start;
+        gap: 20px;
+    }
+
+    .pageTitle {
+        text-align: center;
+        float: none;
+    }
+
+    img#phoneTitle {
+        width: 80%;
+        float: none;
+        margin: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+}
+
+@media (max-width: 750px) {
+
+    .floatLeft {
+        float: none;
+        width: 90%;
+    }
+
+    .iphone_main p {
+        font-size: 20px;
+    }
+    .iphone_main h1 {
+        font-size: 24px;
+    }
+
+    .iphone_main {
+        width: 80%;
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+    }
+
+    .osImg {
+        height: 70px;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 530px) {
+
+    
+
+    .iphone_main p {
+        font-size: 13px;
+        width: 100%;
+        text-align: center;
+    }
+    .iphone_main h1 {
+        font-size: 16px;
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .iphone_main {
+        width: 80%;
+        height: 100px;
+        box-shadow: 0px 20px 30px 0px rgba(0, 0, 0, 0.3);
+        margin-bottom: 30px;
+        margin-top: 10px;
+        padding: 20px;
+    }
+
+    .iphone_main > div {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        
+    }
+}
