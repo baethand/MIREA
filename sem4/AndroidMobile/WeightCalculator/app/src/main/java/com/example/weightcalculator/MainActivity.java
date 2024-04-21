@@ -10,39 +10,20 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.weightcalculator.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textView1;
-    private TextView textView2;
-    private TextView textView3;
-    private TextView textView4;
-    private TextView textView5;
-    private TextView textView6;
-    private TextView textView7;
-    private Button btnCalculate;
-    private Spinner spinner;
-    private EditText poleVvoda;
-    Button goInfoActivity;
+    private ActivityMainBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        textView1 = findViewById(R.id.textView1);
-        textView2 = findViewById(R.id.textView2);
-        textView3 = findViewById(R.id.textView3);
-        textView4 = findViewById(R.id.textView4);
-        textView5 = findViewById(R.id.textView5);
-        textView6 = findViewById(R.id.textView6);
-        textView7 = findViewById(R.id.textView7);
-        btnCalculate = findViewById(R.id.btnCalculate);
-        spinner = findViewById(R.id.spinner);
-        poleVvoda = findViewById(R.id.poleVvoda);
-        goInfoActivity = findViewById(R.id.btn_info);
-
-        goInfoActivity.setOnClickListener(new View.OnClickListener() {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+        binding.btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, InfoActivity.class);
@@ -51,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
+        binding.btnCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String str = poleVvoda.getText().toString();
+                String str = binding.poleVvoda.getText().toString();
                 Float vvod;
                 try {
                     vvod = Float.parseFloat(str);
@@ -62,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (Exception e){
                     vvod = (float) 0;
                 }
-                String selected = spinner.getSelectedItem().toString();
+                String selected = binding.spinner.getSelectedItem().toString();
                 float ideal;
 
                 if(vvod >= 0) {

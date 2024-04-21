@@ -9,30 +9,32 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.weightcalculator.databinding.ActivityMainBinding;
+import com.example.weightcalculator.databinding.ActivitySecondBinding;
+
 public class InfoActivity extends AppCompatActivity {
 
-    TextView resultText;
+    private ActivitySecondBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        binding = ActivitySecondBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_second);
 
-        resultText = findViewById(R.id.resultText);
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("result")) {
             String result = intent.getStringExtra("result");
-            resultText.setText(result);
+            binding.resultText.setText(result);
         }
-        Button goActivity1 = findViewById(R.id.btn_Main);
-        goActivity1.setOnClickListener(new View.OnClickListener() {
+
+        binding.btnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
     }
 }
