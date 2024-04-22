@@ -27,7 +27,7 @@ public class Login extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if User is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -44,58 +44,60 @@ public class Login extends AppCompatActivity {
         setContentView(view);
         mAuth = FirebaseAuth.getInstance();
 
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.progressBar.setVisibility(View.VISIBLE);
-                String email, password;
+        binding.btnLogin.setOnClickListener(initLogin);
 
-                email = String.valueOf(binding.email.getText()).trim().toLowerCase();
-                password = String.valueOf(binding.password.getText()).trim();
-
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
-                    binding.progressBar.setVisibility(View.GONE);
-                    return;
-                }
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
-                    binding.progressBar.setVisibility(View.GONE);
-                    return;
-                }
-
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    binding.progressBar.setVisibility(View.GONE);
-
-                                    Toast.makeText(Login.this, "Authentication success.",
-                                            Toast.LENGTH_SHORT).show();
-
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    binding.progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(Login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-
-            }
-        });
-
-        binding.registerNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Register.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        binding.registerNow.setOnClickListener(goToRegister);
     }
+
+    View.OnClickListener goToRegister = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), Register.class);
+            startActivity(intent);
+            finish();
+        }
+    };
+
+    View.OnClickListener initLogin = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            String email, password;
+
+            email = String.valueOf(binding.email.getText()).trim().toLowerCase();
+            password = String.valueOf(binding.password.getText()).trim();
+
+            if (TextUtils.isEmpty(email)){
+                Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
+                binding.progressBar.setVisibility(View.GONE);
+                return;
+            }
+            if (TextUtils.isEmpty(password)){
+                Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
+                binding.progressBar.setVisibility(View.GONE);
+                return;
+            }
+
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                binding.progressBar.setVisibility(View.GONE);
+
+                                Toast.makeText(Login.this, "Authentication success.",
+                                        Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                binding.progressBar.setVisibility(View.GONE);
+                                Toast.makeText(Login.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    };
 }

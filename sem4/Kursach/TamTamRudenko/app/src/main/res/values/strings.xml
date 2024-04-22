@@ -9,4 +9,11 @@
     <string name="login_now">Do you have an account? Login now</string>
     <string name="register_now">Do you have no account? Register now</string>
     <string name="logout">Logout</string>
+    <string name="add_some_information">Add some information</string>
+    <string name="name">Name*</string>
+    <string name="surname">Surname</string>
+    <string name="description">Write something about you</string>
+    <string name="age">Age*</string>
+    <string name="go_next">Go next</string>
+    <string name="skip_adding_info">It is very boring! Skip it</string>
 </resources>

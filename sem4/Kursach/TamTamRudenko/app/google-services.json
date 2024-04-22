@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "537448924585",
+    "project_id": "tamtam-register-firebase",
+    "storage_bucket": "tamtam-register-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537448924585:android:00899614650835738670b8",
+        "android_client_info": {
+          "package_name": "com.example.tamtamrudenko"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADuOYPu31jOHAKaVaSzKujgJgYTd2GWyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
