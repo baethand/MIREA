@@ -32,7 +32,7 @@ public class AddProfile extends AppCompatActivity {
         binding = ActivityAddProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        mDataBase = FirebaseDatabase.getInstance().getReference(KEY_USER);
+        mDataBase = FirebaseDatabase.getInstance("https://tamtam-register-firebase-default-rtdb.europe-west1.firebasedatabase.app/").getReference(KEY_USER);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
@@ -65,7 +65,7 @@ public class AddProfile extends AppCompatActivity {
 
             String id = mDataBase.getKey();
             User user = new User(id, name, surname, age, description);
-            mDataBase.setValue("hello");
+            mDataBase.setValue(user);
             Toast.makeText(AddProfile.this, "Successfully added!", Toast.LENGTH_SHORT).show();
         }
     };
