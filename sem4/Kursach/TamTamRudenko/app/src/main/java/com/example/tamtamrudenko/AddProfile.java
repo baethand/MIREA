@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.tamtamrudenko.databinding.ActivityAddProfileBinding;
+import com.example.tamtamrudenko.models.Const;
 import com.example.tamtamrudenko.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +25,7 @@ public class AddProfile extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference mDataBase;
     private ActivityAddProfileBinding binding;
-    private static String KEY_USER = "user";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,11 @@ public class AddProfile extends AppCompatActivity {
         binding = ActivityAddProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        mDataBase = FirebaseDatabase.getInstance("https://tamtam-register-firebase-default-rtdb.europe-west1.firebasedatabase.app/").getReference(KEY_USER);
+        mDataBase = FirebaseDatabase
+                .getInstance(Const.DB_URL)
+                .getReference(Const.KEY_USER);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
 
-        myRef.setValue("Hello, World!");
         checkTheAuth();
         binding.btnNext.setOnClickListener(initAddUserInfo);
     }
@@ -61,12 +62,17 @@ public class AddProfile extends AppCompatActivity {
             }
 
             String surname = String.valueOf(binding.surname.getText()).trim();
-            String description = String.valueOf(binding.description.getText()).trim();
+            surname = (!surname.equals("")) ? surname : "none";
 
-            String id = mDataBase.getKey();
+            String description = String.valueOf(binding.description.getText()).trim();
+            surname = (!description.equals("")) ? description : "none";
+
+            String id = user.getUid();
             User user = new User(id, name, surname, age, description);
             mDataBase.setValue(user);
+            binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(AddProfile.this, "Successfully added!", Toast.LENGTH_SHORT).show();
+            binding.btnNext.setOnClickListener(goToMain);
         }
     };
 
@@ -80,4 +86,13 @@ public class AddProfile extends AppCompatActivity {
             finish();
         }
     }
+
+    View.OnClickListener goToMain = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    };
 }
