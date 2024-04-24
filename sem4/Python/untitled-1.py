@@ -1,20 +1,95 @@
-import re
+def main(data):
+    result = ""
+    for i in reversed(data):
+        item = int(i)
+        if 5 <= item <= 7:
+            result += hex(item << 5)[2:]
+        elif 8 <= item <= 11:
+            result += hex(item)[2:]
+        elif 12 <= item <= 17:
+            result += hex(item)[2:]
+        elif 0 <= item <= 4:
+            result += ""
+        else:
+            result += hex(item)[2:]
 
-def parse_string(input_string):
-    parsed_results = []
-    sections = re.findall(r'<section>\s*set\s+(\w+)\s*:=\s*\[\s*(.*?)\s*]\s*</section>', input_string, re.DOTALL)
-    
-    for section in sections:
-        var_name = section[0]
-        elements = [elem.strip() for elem in section[1].split(';') if elem.strip()]
-        parsed_results.append((var_name, elements))
-    
-    return parsed_results
+    return "0x"+result
 
-# Пример использования:
-input_string = r"\begin <section> set usesar_516 := [ zaesis_324 ; edat_614 ]. </section>; <section> set soer:= [ anso ; ais;raed ;xela_568 ]. </section>;\end"
-result = parse_string(input_string)
-print(result)
+# Тесты
+print(main(('5', '2', '58')))    # '0x3a2a0'
+print(main(('7', '15', '36')))   # '0x24fe0'
+print(main(('4', '11', '1')))    # '0x1b80'
+
+
+# import math
+
+# def main(M):
+#     # Функция для вычисления H
+#     def calculate_H(M):
+#         HRes = set()
+        
+#         for mu in M:
+#             mua = math.ceil(mu/3)
+#             if -76 <= mu <= 55:
+#                 HRes.add(mua)
+#         return HRes
+
+#     # Функция для вычисления Omega
+#     def calculate_Omega(M, HRes):
+#         Omega = set()
+#         for mu in M:
+#             for eta in HRes:
+#                 if mu <= eta:
+#                     Omega.add((mu * eta))
+#         return Omega
+
+#     # Функция для вычисления O
+#     def calculate_O(HRes, Omega):
+#         ORes = set()
+#         for eta in HRes:
+#             for omega in Omega:
+#                 if eta > omega:
+#                     ORes.add(eta % 3 + abs(omega))
+#         return ORes
+
+#     # Вычисление H, Omega, и O
+#     HRes = calculate_H(M)
+#     Omega = calculate_Omega(M, HRes)
+#     ORes = calculate_O(HRes, Omega)
+
+#     # Вычисление значения tau
+#     tau = len(Omega)
+#     for mu in Omega:
+#         for eta in ORes:
+#             tau += math.floor(mu / 9) + eta%2
+
+#     return tau
+
+# # Примеры
+# print(main({-96, 34, -62, -92, -88, -24, -51, -39, -71, 93}))  # Должно вывести 92517
+# print(main({-61, -37, -23, 75, -50, 17, -11, -38, 27, -35}))  # Должно вывести 61834
+
+
+
+
+
+# import re
+
+# def parse_string(input_string):
+#     parsed_results = []
+#     sections = re.findall(r'<section>\s*set\s+(\w+)\s*:=\s*\[\s*(.*?)\s*]\s*</section>', input_string, re.DOTALL)
+    
+#     for section in sections:
+#         var_name = section[0]
+#         elements = [elem.strip() for elem in section[1].split(';') if elem.strip()]
+#         parsed_results.append((var_name, elements))
+    
+#     return parsed_results
+
+# # Пример использования:
+# input_string = r"\begin <section> set usesar_516 := [ zaesis_324 ; edat_614 ]. </section>; <section> set soer:= [ anso ; ais;raed ;xela_568 ]. </section>;\end"
+# result = parse_string(input_string)
+# print(result)
 
 
 
