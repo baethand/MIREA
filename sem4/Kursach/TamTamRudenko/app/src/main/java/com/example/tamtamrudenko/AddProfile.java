@@ -26,7 +26,6 @@ public class AddProfile extends AppCompatActivity {
     DatabaseReference mDataBase;
     private ActivityAddProfileBinding binding;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,16 +46,23 @@ public class AddProfile extends AppCompatActivity {
         public void onClick(View v) {
             binding.progressBar.setVisibility(View.VISIBLE);
 
+            Integer age;
             String name = String.valueOf(binding.name.getText()).trim();
-            Integer age = Integer.parseInt(String.valueOf(binding.age.getText()));
+            try {
+                age = Integer.parseInt(String.valueOf(binding.age.getText()).trim());
+            } catch (Exception e){
+                Toast.makeText(AddProfile.this, "Not valid Age (Empty age)", Toast.LENGTH_SHORT).show();
+                binding.progressBar.setVisibility(View.GONE);
+                return;
+            }
 
             if (TextUtils.isEmpty(name)){
-                Toast.makeText(AddProfile.this, "Please enter valid Name (2+ chars)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddProfile.this, "Not valid Name (2+ chars)", Toast.LENGTH_SHORT).show();
                 binding.progressBar.setVisibility(View.GONE);
                 return;
             }
             if (TextUtils.isEmpty(String.valueOf(age))){
-                Toast.makeText(AddProfile.this, "Please enter valid age (12+)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddProfile.this, "Not valid age (12+)", Toast.LENGTH_SHORT).show();
                 binding.progressBar.setVisibility(View.GONE);
                 return;
             }
@@ -69,10 +75,10 @@ public class AddProfile extends AppCompatActivity {
 
             String id = user.getUid();
             User user = new User(id, name, surname, age, description);
-            mDataBase.setValue(user);
+            mDataBase.push().setValue(user);
             binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(AddProfile.this, "Successfully added!", Toast.LENGTH_SHORT).show();
-            binding.btnNext.setOnClickListener(goToMain);
+            goToMain();
         }
     };
 
@@ -87,12 +93,9 @@ public class AddProfile extends AppCompatActivity {
         }
     }
 
-    View.OnClickListener goToMain = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    };
+    public void goToMain() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
