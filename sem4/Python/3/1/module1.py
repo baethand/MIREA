@@ -1,6 +1,6 @@
-from module2 import func2
+from math import sqrt
 
 def func1():
     print("1")
 
-func2()
+sqrt(9)

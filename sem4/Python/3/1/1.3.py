@@ -1,10 +1,10 @@
-from some_module import GLOBAL_VAR
+from math import pi
 GLOBAL_VAR = 42
 #incorrect
 #изменяется локальная копия, а не глобальная переменная в модуле
 
-import some_module
-some_module.GLOBAL_VAR = 42
+import math
+math.GLOBAL_VAR = 42
 #correct
 #изменяем переменную непосредсвенно в модуле
 
