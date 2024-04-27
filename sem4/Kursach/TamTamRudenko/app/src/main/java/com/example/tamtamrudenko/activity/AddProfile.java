@@ -1,4 +1,4 @@
-package com.example.tamtamrudenko;
+package com.example.tamtamrudenko.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,9 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.ktx.Firebase;
-
-import java.util.UUID;
 
 public class AddProfile extends AppCompatActivity {
 

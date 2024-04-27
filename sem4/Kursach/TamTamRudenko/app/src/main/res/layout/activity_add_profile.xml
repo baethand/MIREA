@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingHorizontal="40dp"
-    tools:context=".AddProfile">
+    tools:context=".activity.AddProfile">
 
 
     <TextView
@@ -90,15 +90,5 @@
         android:text="@string/go_next"
         android:textColor="@color/white"
         android:textSize="20sp"/>
-
-    <TextView
-        android:id="@+id/skip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/skip_adding_info"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
 
 </LinearLayout>

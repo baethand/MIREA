@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tam Tam</string>
+    <string name="login">Логин</string>
+    <string name="email">Введите логин</string>
+    <string name="password">Введите пароль</string>
+    <string name="btn_login">Логин</string>
+    <string name="registration">Регистрация</string>
+    <string name="btn_register">Зарегистрироваться</string>
+    <string name="login_now">У вас есть аккаунт? Войдите сейчас</string>
+    <string name="register_now">У вас нет аккаунта? Зарегистрируйтесь</string>
+    <string name="logout">Выход</string>
+    <string name="add_some_information">Добавьте информации</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="description">Напишите о себе</string>
+    <string name="age">Возраст</string>
+    <string name="go_next">Далее</string>
+    <string name="skip_adding_info">Это скучно! Скип</string>
+</resources>
