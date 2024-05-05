@@ -8,6 +8,9 @@
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -16,7 +19,6 @@
 
         android:orientation="horizontal"
         android:paddingHorizontal="10dp">
-
         <TextView
             android:id="@+id/user_details"
             android:layout_width="wrap_content"
@@ -33,15 +35,16 @@
             android:layout_weight="1"
             android:text="@string/logout" />
 
+
     </LinearLayout>
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
+    <FrameLayout
+        android:id="@+id/fragment_main"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
 
-        android:layout_height="200dp"
-        android:layout_weight="3" />
 
     <LinearLayout
         android:layout_width="match_parent"
