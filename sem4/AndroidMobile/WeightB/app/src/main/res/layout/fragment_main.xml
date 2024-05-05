@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/bit"
+        android:layout_width="110dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="55dp"
+        android:ems="10"
+        android:hint="@string/carat"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/byteE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/byteE"
+        android:layout_width="111dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="55dp"
+        android:ems="10"
+        android:hint="@string/gram"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/kbyte"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bit" />
+
+    <EditText
+        android:id="@+id/kbyte"
+        android:layout_width="112dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="55dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/kg"
+        app:layout_constraintBottom_toTopOf="@+id/mbyte"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/byteE" />
+
+    <EditText
+        android:id="@+id/mbyte"
+        android:layout_width="112dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="55dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/metric_ton"
+        app:layout_constraintBottom_toTopOf="@+id/gbyte"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kbyte" />
+
+    <EditText
+        android:id="@+id/gbyte"
+        android:layout_width="112dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="55dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/short_ton"
+        app:layout_constraintBottom_toTopOf="@+id/tbyte"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mbyte" />
+
+    <EditText
+        android:id="@+id/tbyte"
+        android:layout_width="112dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="55dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/pound"
+        app:layout_constraintBottom_toTopOf="@+id/ounce"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gbyte" />
+
+    <EditText
+        android:id="@+id/ounce"
+        android:layout_width="112dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="55dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/ounce"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbyte" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.077" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/intro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.026" />
+
+    <Button
+        android:id="@+id/clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="Очистить"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.752"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/buttonRef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="16dp"
+        android:text="Справка"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clear" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
