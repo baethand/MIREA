@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.tamtamrudenko.R;
 import com.example.tamtamrudenko.databinding.ActivityMainBinding;
-import com.example.tamtamrudenko.fragments.EditProfileFragment;
 import com.example.tamtamrudenko.fragments.EventsFragment;
 import com.example.tamtamrudenko.fragments.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,22 +22,17 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
     private ActivityMainBinding binding;
-    EditProfileFragment editProfileFragment = new EditProfileFragment();
-
-    FrameLayout frameLayout;
-
+    EventsFragment eventsFragment = new EventsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_main);
+        View view = binding.getRoot();
+        setContentView(view);
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
-        frameLayout = findViewById(R.id.fragment_main);
-
 
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), Login.class);
@@ -46,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         else {
-            binding.userDetails.setText(user.getUid());
+            binding.userDetails.setText(user.getEmail());
         }
+
+        setNewFragment(eventsFragment);
 
         binding.logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +55,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         binding.btnEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditProfileFragment profileFragment = new EditProfileFragment();
-                setNewFragment(profileFragment);
+                EventsFragment eventsFragment = new EventsFragment();
+                setNewFragment(eventsFragment);
             }
         });
 
@@ -80,23 +74,23 @@ public class MainActivity extends AppCompatActivity {
         binding.btnMine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EventsFragment eventsFragment = new EventsFragment();
+                setNewFragment(eventsFragment);
             }
         });
 
         binding.btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ProfileFragment profileFragment = new ProfileFragment();
-                setNewFragment(profileFragment);
+                ProfileFragment fragment = new ProfileFragment();
+                setNewFragment(fragment);
             }
         });
     }
 
     public void setNewFragment(Fragment fragment){
-        Toast.makeText(MainActivity.this, "Start new fragment", Toast.LENGTH_SHORT).show();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_main, fragment);
+        ft.replace(binding.fragmentMain.getId(), fragment);
         ft.addToBackStack(null);
         ft.commit();
     }

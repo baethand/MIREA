@@ -1,61 +1,126 @@
-import struct
-
-# Определение форматов для каждой структуры
-format_A = ">q I f i f I bb"
+from struct import *
 
 
-format_B = ">Q b H H B 4s I H"
-format_G = ">B i b I"
+def parse(buffer, offset, type, order='<'):
+    pattern = {
+        'float': 'f',
+        'double': 'd',
+        'char': 'c',
+        'int8': 'b',
+        'uint8': 'B',
+        'int16': 'h',
+        'uint16': 'H',
+        'int32': 'i',
+        'uint32': 'I',
+        'int64': 'q',
+        'uint64': 'Q'
+    }[type]
+    size = calcsize(order + pattern)
+    value = unpack_from(order + pattern, buffer, offset)[0]
+    return value, offset + size
 
-# Двоичные данные
-binary_data = (b'PVYIL\x81Fs\xf4\x88iW\x89g\x16\xe3!\xd1\xa0BB\xf2\x00]\x00\x84\xdboeka\x00'
-               b'\x00\x00\x8e\x00\x03\x00\x95<}\rG\xa7c\xcc\xc8>T\x9a\x8c\x9c\xd0\xe6\x117'
-               b'\xadW\x15q\xd4\x1d\xcaJ\\\xb7\x8fFC\xd8\xb2>\x85\xae\xdapwJ^tyj\x80\xbd'
-               b'\xb3\xde\xbczQ\xfc\x8a\xc2\xc9>\x84\x9b_\xd8\x1bJD\xb9\xcc\x00\x00\x00?\x00'
-               b"\x00\x00E\x00\x00\x00K\x00\x00\x00Q\x00\x00\x00W\x9e[w\x82\xf3'\x0fh\\"
-               b'\xd3\xb6\x95\x8aB\x90\xa1\xf0\x0b\xc5\x00\x04\x00\x00\x00\x8aB\xd3\x08\xa7'
-               b'\xc1\xed\xa0')
+def parse_g(buffer, offset):
+    g1, offset = parse(buffer, offset, 'uint8')
+    g2, offset = parse(buffer, offset, 'int32')
+    g3, offset = parse(buffer, offset, 'int8')
+    g4, offset = parse(buffer, offset, 'uint32')
+    return {'G1': g1, 'G2': g2, 'G3': g3, 'G4': g4}, offset
 
-# Разбор данных
-A1, B1, C1, A3, A4, A5, G1, A7_1, A7_2 = struct.unpack(format_A, binary_data[:30])
-B2, C2, C3, D1_1, D2_1, D1_2, D2_2, D1_3, D2_3, D1_4, D2_4, D1_5, D2_5, C5, C6 = struct.unpack(">bHfIIIIIIIIiQ", binary_data[46:94])
-E1, E2, E3 = struct.unpack(">hhh", binary_data[94:100])
-F1_1, F1_2, F1_3, F1_4, F2 = struct.unpack(">biiiiB", binary_data[100:116])
-G2, G3, G4 = struct.unpack(">ibI", binary_data[116:126])
+def parse_f(buffer, offset):
+    #----------------------
+    f1 = []
+    array_size, offset = parse(buffer, offset, 'uint16')
+    adr_offset, offset = parse(buffer, offset, 'uint32')
+    for _ in range(array_size):
+        val, offset = parse(buffer, offset, 'int8')
+        f1.append(val)
+    #----------------------
+    f2, offset = parse(buffer, offset, 'uint8')
+    return {'F1': f1, 'F2': f2}, offset
 
-# Преобразование массива uint16 в список
-B8 = []
-for i in range(126, 140, 2):
-    B8.append(struct.unpack(">H", binary_data[i:i+2])[0])
+def parse_e(buffer, offset):
+    e1, offset = parse(buffer, offset, 'int16')
+    e2, offset = parse(buffer, offset, 'int16')
+    e3, offset = parse(buffer, offset, 'int16')
+    return {'E1': e1, 'E2': e2, 'E3': e3}, offset
 
-# Преобразование массива int8 в список
-A7 = struct.unpack("bb", binary_data[-2:])
 
-# Вывод результатов
-print({
-    'A1': A1,
-    'A2': {
-        'B1': B1,
-        'B2': B2,
-        'B3': {
-            'C1': C1,
-            'C2': C2,
-            'C3': C3,
-            'C4': [{'D1': D1_1, 'D2': D2_1}, {'D1': D1_2, 'D2': D2_2},
-                    {'D1': D1_3, 'D2': D2_3}, {'D1': D1_4, 'D2': D2_4},
-                    {'D1': D1_5, 'D2': D2_5}],
-            'C5': C5,
-            'C6': C6
-        },
-        'B4': {'E1': E1, 'E2': E2, 'E3': E3},
-        'B5': B5,
-        'B6': binary_data[100:104].decode(),
-        'B7': {'F1': [F1_1, F1_2, F1_3, F1_4], 'F2': F2},
-        'B8': B8
-    },
-    'A3': A3,
-    'A4': A4,
-    'A5': A5,
-    'A6': {'G1': G1, 'G2': G2, 'G3': G3, 'G4': G4},
-    'A7': A7
-})
+def parse_c(buffer, offset):
+    c1, offset = parse(buffer, offset, 'float')
+    
+    c2, offset = parse(buffer, offset, 'int16')
+    
+    c3, offset = parse(buffer, offset, 'uint32')
+    
+    #----------------------
+    c4 = []
+    for _ in range(5):
+        val_offset, offset = parse(buffer, offset, 'uint32')
+        val, _ = parse_d(buffer, val_offset)
+        c4.append(val)
+    #----------------------
+    c5, offset = parse(buffer, offset, 'int8')
+    c6, offset = parse(buffer, offset, 'uint64')
+    return {'C1': c1, 'C2': c2, 'C3': c3, 'C4': c4, 'C5': c5, 'C6': c6}, offset
+
+
+def parse_d(buffer, offset):
+    d1, offset = parse(buffer, offset, 'uint16')
+    d2, offset = parse(buffer, offset, 'int32')
+    return {'D1': d1, 'D2': d2}, offset
+
+
+def parse_b(buffer, offset):
+    b1, offset = parse(buffer, offset, 'uint64')
+    b2, offset = parse(buffer, offset, 'int8')
+    b3_offset, offset = parse(buffer, offset, 'uint16')
+    b3, _ = parse_c(buffer, b3_offset)
+    b4_offset, offset = parse(buffer, offset, 'uint16')
+    b4, _ = parse_e(buffer, b4_offset)
+    b5, offset = parse(buffer, offset, 'uint8')
+    b6 = buffer[offset:offset+4].decode('ascii')
+    offset += 4
+    b7_offset, offset = parse(buffer, offset, 'uint32')
+    b7, _ = parse_f(buffer, b7_offset)
+
+    #---------------------------------------------------------------------
+    b8 = []
+    array_size, offset = parse(buffer, offset, 'uint16')
+    adr_offset, offset = parse(buffer, offset, 'uint16')
+    for _ in range(array_size):
+        b8_offset, adr_offset = parse(buffer, adr_offset, 'uint16')
+        val, _ = parse(buffer, b8_offset, 'uint16')
+        b8.append(val)
+
+    return {'B1': b1, 'B2': b2, 'B3': b3, 'B4': b4, 'B5': b5,
+            'B6': b6, 'B7': b7, 'B8': b8}, offset
+
+
+def parse_a(buffer, offset):
+    offset = 7
+    a1, offset = parse(buffer, offset, 'int64')
+    a2, offset = parse_b(buffer, offset)
+    a3, offset = parse(buffer, offset, 'float')
+    a4, offset = parse(buffer, offset, 'int32')
+    a5, offset = parse(buffer, offset, 'float')
+    a6, offset = parse_g(buffer, offset)
+    a7 = []
+    offset+=2
+    for _ in range(2):
+        val, offset = parse(buffer, offset, 'int8')
+        a7.append(val)
+    return {'A1': a1, 'A2': a2, 'A3': a3, 'A4': a4, 'A5': a5, 'A6': a6,
+            'A7': a7}, offset
+
+
+def main(data):
+    result, _ = parse_a(data, 0)
+    return result
+
+print(main(b'PVYIL\xb1\xdf\xf4\r\x85\xda\xb3\x17\xcb\xee\xf7\xd2H\x1f\x05\xca\x00\x00]'
+ b'\x00\x840juco\x00\x00\x00\x8c\x00\x02\x00\x93\xbd\xd0\xf9}*\xfb\xa2\x05\xbf'
+ b'\x05\xde,0\x9fq]i\xa1+nh\x9bzS\x19\xcd7\xd6\x06ou\xdf\xf6z9\xef,'
+ b'\xca\x93\xa3\xaf\xccb\x9e\xb2\x19\x06\x95m\xf5\xaen\xcdA?\x15\xb4\x1a\x145j'
+ b'\xed\xa2Y\x00\x00\x00?\x00\x00\x00E\x00\x00\x00K\x00\x00\x00Q\x00\x00\x00Wp'
+ b'v\x1cI)\xa6\xa1f6g\x8b\xf5@\xe3\x812I\x00\x02\x00\x00\x00\x8a\xfeR'
+ b'\xc7\xf0\xe7'))

@@ -1,23 +1,14 @@
 def main(data):
-    result = ""
-    for i in reversed(data):
-        item = int(i)
-        if 5 <= item <= 7:
-            result += hex(item << 5)[2:]
-        elif 8 <= item <= 11:
-            result += hex(item)[2:]
-        elif 12 <= item <= 17:
-            result += hex(item)[2:]
-        elif 0 <= item <= 4:
-            result += ""
-        else:
-            result += hex(item)[2:]
-
-    return "0x"+result
+    first = bin(int(data[0]))[2:]
+    first = (3-len(first))*"0"+first
+    second = (bin(int(data[1])&0b1111))[2:]
+    second = (4-len(second))*"0"+second
+    third = bin(int(data[2]))[2:]
+    return hex(int(third+second+first+"00000",2))
 
 # Тесты
-print(main(('5', '2', '58')))    # '0x3a2a0'
-print(main(('7', '15', '36')))   # '0x24fe0'
+print(main(('5', '12', '0')))    # '0xca0'
+print(main(('5', '2', '58')))   # '0x3a2a0'
 print(main(('4', '11', '1')))    # '0x1b80'
 
 
