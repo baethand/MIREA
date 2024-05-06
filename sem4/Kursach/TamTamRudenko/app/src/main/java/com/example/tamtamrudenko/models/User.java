@@ -1,21 +1,30 @@
 package com.example.tamtamrudenko.models;
 
+import java.util.List;
+import java.util.UUID;
+
 public class User {
     public String id;
     public String name;
     public String surname;
     public Integer age;
     public String description;
+    public List<UUID> events;
+    public Boolean isCreator;
 
-    public User() {
-    }
-
-    public User(String id, String name, String surname, Integer age, String description) {
+    public User(String id, String name, String surname,
+                Integer age, String description,
+                List<UUID> events, Boolean isCreator) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.description = description;
+        this.events = events;
+        this.isCreator = isCreator;
+    }
+
+    public User() {
     }
 
     public String getId() {
@@ -58,7 +67,19 @@ public class User {
         this.description = description;
     }
 
+    public List<UUID> getEvents() {
+        return events;
+    }
 
+    public void setEvents(List<UUID> events) {
+        this.events = events;
+    }
 
+    public Boolean getCreator() {
+        return isCreator;
+    }
 
+    public void setCreator(Boolean creator) {
+        isCreator = creator;
+    }
 }

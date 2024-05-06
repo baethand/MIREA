@@ -12,15 +12,19 @@ import android.widget.Toast;
 
 import com.example.tamtamrudenko.R;
 import com.example.tamtamrudenko.databinding.ActivityMainBinding;
+import com.example.tamtamrudenko.fragments.CreateEventFragment;
 import com.example.tamtamrudenko.fragments.EventsFragment;
+import com.example.tamtamrudenko.fragments.MineEventsFragment;
 import com.example.tamtamrudenko.fragments.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     FirebaseUser user;
+    DatabaseReference dataBase;
     private ActivityMainBinding binding;
     EventsFragment eventsFragment = new EventsFragment();
 
@@ -66,16 +70,16 @@ public class MainActivity extends AppCompatActivity {
         binding.btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventsFragment eventsFragment = new EventsFragment();
-                setNewFragment(eventsFragment);
+                CreateEventFragment createEventFragment = new CreateEventFragment();
+                setNewFragment(createEventFragment);
             }
         });
 
         binding.btnMine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventsFragment eventsFragment = new EventsFragment();
-                setNewFragment(eventsFragment);
+                MineEventsFragment mineEventsFragment = new MineEventsFragment();
+                setNewFragment(mineEventsFragment);
             }
         });
 

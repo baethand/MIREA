@@ -22,4 +22,10 @@
     <string name="events">Лента</string>
     <string name="create">Создать</string>
     <string name="mine">Мои</string>
+    <string name="mail_example">example@mail.ru</string>
+    <string name="create_event">Create event</string>
+    <string name="your_events">Your events</string>
+    <string name="i_am_a_creator">I am a creator</string>
+    <string name="name_surname">Name Surname</string>
+    <string name="edit">Edit</string>
 </resources>

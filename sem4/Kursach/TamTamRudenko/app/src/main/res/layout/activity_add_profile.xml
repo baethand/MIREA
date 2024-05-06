@@ -24,7 +24,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white">
+        android:textColorHint="@color/white"
+        app:boxCornerRadiusBottomStart="25dp"
+        app:boxCornerRadiusTopStart="25dp"
+        app:boxCornerRadiusBottomEnd="25dp"
+        app:boxCornerRadiusTopEnd="25dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name"
@@ -37,7 +41,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white">
+        android:textColorHint="@color/white"
+        app:boxCornerRadiusBottomStart="25dp"
+        app:boxCornerRadiusTopStart="25dp"
+        app:boxCornerRadiusBottomEnd="25dp"
+        app:boxCornerRadiusTopEnd="25dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/surname"
@@ -50,7 +58,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white">
+        android:textColorHint="@color/white"
+        app:boxCornerRadiusBottomStart="25dp"
+        app:boxCornerRadiusTopStart="25dp"
+        app:boxCornerRadiusBottomEnd="25dp"
+        app:boxCornerRadiusTopEnd="25dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/description"
@@ -63,7 +75,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white">
+        android:textColorHint="@color/white"
+        app:boxCornerRadiusBottomStart="25dp"
+        app:boxCornerRadiusTopStart="25dp"
+        app:boxCornerRadiusBottomEnd="25dp"
+        app:boxCornerRadiusTopEnd="25dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/age"
@@ -71,8 +87,18 @@
             android:layout_height="wrap_content"
             android:hint="@string/age"
             android:textColor="@color/white" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <CheckBox
+        android:layout_marginStart="60dp"
+        android:id="@+id/isCreator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:buttonTint="@color/whiteGrey"
+        android:text="@string/i_am_a_creator" />
 
     <ProgressBar
         android:id="@+id/progressBar"

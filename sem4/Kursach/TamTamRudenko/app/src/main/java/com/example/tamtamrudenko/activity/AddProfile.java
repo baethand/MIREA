@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class AddProfile extends AppCompatActivity {
 
     FirebaseAuth auth;
@@ -43,41 +45,51 @@ public class AddProfile extends AppCompatActivity {
         public void onClick(View v) {
             binding.progressBar.setVisibility(View.VISIBLE);
 
-            Integer age;
-            String name = String.valueOf(binding.name.getText()).trim();
-            try {
-                age = Integer.parseInt(String.valueOf(binding.age.getText()).trim());
-            } catch (Exception e){
-                Toast.makeText(AddProfile.this, "Not valid Age (Empty age)", Toast.LENGTH_SHORT).show();
-                binding.progressBar.setVisibility(View.GONE);
+            User user = prepareUserInfo();
+
+            if (user == null){
                 return;
             }
 
-            if (TextUtils.isEmpty(name)){
-                Toast.makeText(AddProfile.this, "Not valid Name (2+ chars)", Toast.LENGTH_SHORT).show();
-                binding.progressBar.setVisibility(View.GONE);
-                return;
-            }
-            if (TextUtils.isEmpty(String.valueOf(age))){
-                Toast.makeText(AddProfile.this, "Not valid age (12+)", Toast.LENGTH_SHORT).show();
-                binding.progressBar.setVisibility(View.GONE);
-                return;
-            }
-
-            String surname = String.valueOf(binding.surname.getText()).trim();
-            surname = (!surname.equals("")) ? surname : "none";
-
-            String description = String.valueOf(binding.description.getText()).trim();
-            surname = (!description.equals("")) ? description : "none";
-
-            String id = user.getUid();
-            User user = new User(id, name, surname, age, description);
             mDataBase.push().setValue(user);
             binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(AddProfile.this, "Successfully added!", Toast.LENGTH_SHORT).show();
             goToMain();
         }
     };
+
+    private User prepareUserInfo(){
+        Integer age;
+        String name = String.valueOf(binding.name.getText()).trim();
+        try {
+            age = Integer.parseInt(String.valueOf(binding.age.getText()).trim());
+        } catch (Exception e){
+            Toast.makeText(AddProfile.this, "Not valid Age", Toast.LENGTH_SHORT).show();
+            binding.progressBar.setVisibility(View.GONE);
+            return null;
+        }
+
+        if (TextUtils.isEmpty(name)){
+            Toast.makeText(AddProfile.this, "Not valid Name", Toast.LENGTH_SHORT).show();
+            binding.progressBar.setVisibility(View.GONE);
+            return null;
+        }
+        if (age < 12 && age > 112){
+            Toast.makeText(AddProfile.this, "Unavailable age", Toast.LENGTH_SHORT).show();
+            binding.progressBar.setVisibility(View.GONE);
+            return null;
+        }
+
+        String surname = String.valueOf(binding.surname.getText()).trim();
+        surname = (!surname.equals("")) ? surname : "none";
+
+        String description = String.valueOf(binding.description.getText()).trim();
+        description = (!description.equals("")) ? description : "none";
+
+        Boolean isCreator = binding.isCreator.isChecked();
+        String id = user.getUid();
+        return new User(id, name, surname, age, description, new ArrayList<>(), isCreator);
+    }
 
     public void checkTheAuth(){
         auth = FirebaseAuth.getInstance();

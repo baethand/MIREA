@@ -41,11 +41,11 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         binding.btnRegister.setOnClickListener(initRegistration);
-
         binding.loginNow.setOnClickListener(goToLogin);
     }
 
 
+    //----------------------------------------------------------------------------------------------
     View.OnClickListener goToLogin = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
