@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class AddProfile extends AppCompatActivity {
