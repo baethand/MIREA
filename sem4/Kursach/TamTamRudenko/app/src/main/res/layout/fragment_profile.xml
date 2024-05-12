@@ -46,6 +46,7 @@
             android:gravity="center"/>
 
         <TextView
+            android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/age"
@@ -54,14 +55,17 @@
             android:gravity="center"/>
 
         <TextView
+            android:id="@+id/event_creator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="Events creator ♥"
             android:textSize="24sp"
             android:textColor="@color/white"
             android:gravity="center"/>
 
         <TextView
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/description"
@@ -71,6 +75,7 @@
             android:gravity="center"/>
 
         <Button
+            android:id="@+id/btn_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

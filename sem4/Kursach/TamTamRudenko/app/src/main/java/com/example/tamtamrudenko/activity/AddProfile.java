@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class AddProfile extends AppCompatActivity {
@@ -52,7 +51,7 @@ public class AddProfile extends AppCompatActivity {
                 return;
             }
 
-            mDataBase.push().setValue(user);
+            mDataBase.child(user.getId()).setValue(user);
             binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(AddProfile.this, "Successfully added!", Toast.LENGTH_SHORT).show();
             goToMain();
@@ -89,7 +88,7 @@ public class AddProfile extends AppCompatActivity {
 
         Boolean isCreator = binding.isCreator.isChecked();
         String id = user.getUid();
-        return new User(id, name, surname, age, description, new ArrayList<>(), isCreator);
+        return new User(id, name, surname, age, description, new ArrayList<>(), isCreator, "");
     }
 
     public void checkTheAuth(){
