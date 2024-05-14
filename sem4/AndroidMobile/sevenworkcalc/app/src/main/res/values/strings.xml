@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MassConverter</string>
+    <string name="carat">Carat</string>
+    <string name="gram">Gram</string>
+    <string name="kg">Kilogram</string>
+    <string name="metric_ton">Metric Ton</string>
+    <string name="short_ton">Short Ton</string>
+    <string name="pound">Pound</string>
+    <string name="ounce">Ounce</string>
+    <string name="intro">Введите значение массы</string>
+    <string name="name">Калькулятор массы</string>
+    <string name="calculator">Калькулятор</string>
+    <string name="author">Автор</string>
+    <string name="about">Подробнее</string>
+    <string name="action_home">Main page</string>
+    <string name="exit">Exit</string>
+</resources>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/carat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Carat: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/caratValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/carat"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/gram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carat"
+        android:text="Gram: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/gramValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/gram"
+        android:layout_below="@id/carat"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/kilogram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gram"
+        android:text="Kilogram: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/kilogramValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/kilogram"
+        android:layout_below="@id/gram"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/metric_ton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kilogram"
+        android:text="Metric ton: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/metric_tonValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/metric_ton"
+        android:layout_below="@id/kilogram"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/short_ton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/metric_ton"
+        android:text="Short ton: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/short_tonValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/short_ton"
+        android:layout_below="@id/metric_ton"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/pound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/short_ton"
+        android:text="Pound: "
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/poundValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/pound"
+        android:layout_below="@id/short_ton"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/ounce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ounce:"
+        android:textSize="20sp"
+        android:layout_below="@id/pound" />
+
+    <TextView
+        android:id="@+id/ounceValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pound"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/ounce"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/backMainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/poundValueTextView"
+        android:layout_marginTop="50dp"
+        android:text="Back to Main fragment" />
+
+</RelativeLayout>
