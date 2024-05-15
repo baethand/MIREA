@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.tamtamrudenko.R;
 import com.example.tamtamrudenko.databinding.FragmentProfileBinding;
 import com.example.tamtamrudenko.models.User;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
@@ -52,5 +53,6 @@ public class ProfileFragment extends Fragment {
         else {
             binding.eventCreator.setVisibility(View.GONE);
         }
+        Picasso.get().load(user.getUserImageUrl()).into(binding.profileImage);
     }
 }
