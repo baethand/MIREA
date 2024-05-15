@@ -30,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProfileFragment.ProfileListener {
 
     FirebaseAuth auth;
     FirebaseUser user;
@@ -106,15 +106,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ProfileFragment fragment = new ProfileFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("user", userInfo);
-                fragment.setArguments(bundle);
+
                 setNewFragment(fragment);
             }
         });
     }
 
     public void setNewFragment(Fragment fragment){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", userInfo);
+        fragment.setArguments(bundle);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(binding.fragmentMain.getId(), fragment);
         ft.addToBackStack(null);
@@ -137,6 +139,11 @@ public class MainActivity extends AppCompatActivity {
 
         return userInfo;
     };
+
+    @Override
+    public void sendUser(User user) {
+        userInfo = user;
+    }
 
 
 }

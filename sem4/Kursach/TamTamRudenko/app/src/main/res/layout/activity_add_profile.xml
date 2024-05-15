@@ -25,11 +25,12 @@
 
     <ImageView
         android:id="@+id/choose_image_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="20dp"
-        android:src="@drawable/empty_tall_divider"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:background="@drawable/round_profile_picture"
+        android:src="@drawable/default_profile_picture"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@drawable/default_profile_picture" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

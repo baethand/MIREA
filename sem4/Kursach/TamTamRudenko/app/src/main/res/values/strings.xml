@@ -28,4 +28,6 @@
     <string name="i_am_a_creator">I am a creator</string>
     <string name="name_surname">Name Surname</string>
     <string name="edit">Edit</string>
+    <string name="edit_profile">Изменить профиль</string>
+    <string name="save">Save</string>
 </resources>
