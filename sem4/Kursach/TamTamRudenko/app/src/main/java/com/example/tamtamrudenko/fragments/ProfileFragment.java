@@ -182,7 +182,7 @@ public class ProfileFragment extends Fragment {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
         byte[] byteArray = baos.toByteArray();
-        StorageReference mRef = mStorageReference.child(user.getId()+"-profileImage");
+        StorageReference mRef = mStorageReference.child(Const.KEY_PROFILE_IMAGES).child(user.getId()+"-profileImage");
         UploadTask uploadTask = mRef.putBytes(byteArray);
         Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override

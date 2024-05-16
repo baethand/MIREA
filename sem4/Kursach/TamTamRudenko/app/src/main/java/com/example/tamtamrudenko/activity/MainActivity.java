@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.P
             @Override
             public void onClick(View v) {
                 ProfileFragment fragment = new ProfileFragment();
-
                 setNewFragment(fragment);
             }
         });

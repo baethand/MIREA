@@ -30,4 +30,6 @@
     <string name="edit">Edit</string>
     <string name="edit_profile">Изменить профиль</string>
     <string name="save">Save</string>
+    <string name="name_of_your_event">Name of your event</string>
+    <string name="create_event_btn_txt">Create event</string>
 </resources>

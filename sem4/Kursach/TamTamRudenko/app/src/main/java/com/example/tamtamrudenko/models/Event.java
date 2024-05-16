@@ -10,16 +10,26 @@ public class Event implements Parcelable {
     private String description;
     private List<String> usersId;
     private String eventImageUrl;
+    private Integer seats;
+
+    public Integer getSeats() {
+        return seats;
+    }
+
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
 
     public Event() {
     }
 
-    public Event(String id, String name, String description, List<String> usersId, String eventImageUrl) {
+    public Event(String id, String name, String description, List<String> usersId, String eventImageUrl, Integer seats) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.usersId = usersId;
         this.eventImageUrl = eventImageUrl;
+        this.seats = seats;
     }
 
     protected Event(Parcel in) {
@@ -28,6 +38,7 @@ public class Event implements Parcelable {
         description = in.readString();
         usersId = in.createStringArrayList();
         eventImageUrl = in.readString();
+        seats = in.readInt();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -94,5 +105,6 @@ public class Event implements Parcelable {
         parcel.writeString(description);
         parcel.writeStringList(usersId);
         parcel.writeString(eventImageUrl);
+        parcel.writeInt(seats);
     }
 }
