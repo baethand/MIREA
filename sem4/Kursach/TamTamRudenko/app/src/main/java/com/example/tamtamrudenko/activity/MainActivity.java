@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.P
     FirebaseDatabase database;
     private ActivityMainBinding binding;
     DatabaseReference userRef;
-    EventsFragment eventsFragment = new EventsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.P
 
         userRef = database.getReference(Const.KEY_USER).child(user.getUid());
 
-        userInfo = updateUserInfo();
-
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
@@ -65,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.P
             binding.userDetails.setText(user.getEmail());
         }
 
-        setNewFragment(eventsFragment);
+
+        setNewFragment(new EventsFragment());
 
         binding.logout.setOnClickListener(new View.OnClickListener() {
 
@@ -109,9 +107,11 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.P
                 setNewFragment(fragment);
             }
         });
+        userInfo = updateUserInfo();
     }
 
     public void setNewFragment(Fragment fragment){
+        userInfo = updateUserInfo();
         Bundle bundle = new Bundle();
         bundle.putParcelable("user", userInfo);
         fragment.setArguments(bundle);

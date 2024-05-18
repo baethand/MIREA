@@ -147,7 +147,7 @@ public class CreateEventFragment extends Fragment {
     private void uploadImage(){
         Bitmap bitmap = ((BitmapDrawable) binding.btnImageEvent.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         byte[] byteArray = baos.toByteArray();
         StorageReference mRef = mStorageReference.child(Const.KEY_EVENTS_IMAGES).child(uuid.toString() +"-eventImage");
         UploadTask uploadTask = mRef.putBytes(byteArray);

@@ -6,24 +6,19 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import androidx.databinding.DataBindingUtil;
-
-import com.example.tamtamrudenko.R;
-import com.example.tamtamrudenko.activity.AddProfile;
-import com.example.tamtamrudenko.databinding.ActivityAddProfileBinding;
+import com.example.tamtamrudenko.adapters.EventAdapter;
 import com.example.tamtamrudenko.databinding.FragmentProfileBinding;
 import com.example.tamtamrudenko.models.Const;
+import com.example.tamtamrudenko.models.Event;
 import com.example.tamtamrudenko.models.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,9 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.example.tamtamrudenko.transform.*;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
@@ -91,7 +86,7 @@ public class ProfileFragment extends Fragment {
                 binding.profileScrollView.setVisibility(View.GONE);
                 binding.editScrollView.setVisibility(View.VISIBLE);
                 if (user.getUserImageUrl() != null && !user.getUserImageUrl().trim().equals("")){
-                    Picasso.get().load(user.getUserImageUrl()).into(binding.chooseImageButton);
+                    Picasso.get().load(user.getUserImageUrl()).transform(new RoundedCornersTransform()).into(binding.chooseImageButton);
                     uploadUrl = Uri.parse(user.getUserImageUrl());
                 }
                 binding.namePole.setText(user.getName());
@@ -209,7 +204,7 @@ public class ProfileFragment extends Fragment {
             binding.eventCreator.setVisibility(View.GONE);
         }
         if (user.getUserImageUrl() != null && !user.getUserImageUrl().trim().equals(""))
-            Picasso.get().load(user.getUserImageUrl()).into(binding.profileImage);
+            Picasso.get().load(user.getUserImageUrl()).transform(new RoundedCornersTransform()).into(binding.profileImage);
     }
 
 

@@ -32,4 +32,6 @@
     <string name="save">Save</string>
     <string name="name_of_your_event">Name of your event</string>
     <string name="create_event_btn_txt">Create event</string>
+    <string name="name_of_event">Name of Event</string>
+    <string name="description_of_event">Description of event</string>
 </resources>
