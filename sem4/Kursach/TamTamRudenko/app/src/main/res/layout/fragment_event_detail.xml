@@ -97,7 +97,7 @@
                 android:paddingHorizontal="40dp"
                 android:paddingVertical="10dp"
                 android:layout_marginBottom="20dp"
-                android:text="Participate"/>
+                android:text="Unparticipate"/>
             <Button
                 android:id="@+id/unavailable"
                 android:layout_width="wrap_content"

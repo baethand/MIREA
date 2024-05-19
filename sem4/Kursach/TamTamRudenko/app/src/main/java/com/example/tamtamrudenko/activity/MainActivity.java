@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements ProfileFragment.ProfileListener {
 
     FirebaseAuth auth;
@@ -127,6 +129,9 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.P
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userInfo = dataSnapshot.getValue(User.class);
+                if (userInfo.getEvents() == null){
+                    userInfo.setEvents(new ArrayList<>());
+                }
             }
 
             @Override
