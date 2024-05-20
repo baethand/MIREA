@@ -148,7 +148,7 @@ public class EventDetailFragment extends Fragment {
             binding.btnUnparty.setVisibility(View.VISIBLE);
             binding.unavailable.setVisibility(View.GONE);
         }
-        else {
+        else if (avSeats != 0 && !event.getUsersId().contains(user.getId())) {
             binding.btnParty.setVisibility(View.VISIBLE);
             binding.btnUnparty.setVisibility(View.GONE);
             binding.unavailable.setVisibility(View.GONE);

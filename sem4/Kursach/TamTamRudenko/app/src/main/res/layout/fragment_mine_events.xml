@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:paddingLeft="20dp"
-            android:text="@string/create_event"
+            android:text="@string/mine"
             android:textColor="@color/white"
             android:textSize="32sp" />
 
