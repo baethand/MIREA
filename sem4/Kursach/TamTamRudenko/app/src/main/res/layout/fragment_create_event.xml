@@ -26,7 +26,27 @@
             android:gravity="left"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/u_are_not_creator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="30dp"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="Вы не создатель"/>
+    </LinearLayout>
+
     <ScrollView
+        android:id="@+id/create_event_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

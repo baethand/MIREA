@@ -34,4 +34,5 @@
     <string name="create_event_btn_txt">Create event</string>
     <string name="name_of_event">Name of Event</string>
     <string name="description_of_event">Description of event</string>
+    <string name="back">Back</string>
 </resources>

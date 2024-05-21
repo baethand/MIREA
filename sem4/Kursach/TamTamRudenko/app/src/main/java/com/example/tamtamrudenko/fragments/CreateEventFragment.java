@@ -69,6 +69,11 @@ public class CreateEventFragment extends Fragment {
         mStorageReference = FirebaseStorage.getInstance().getReference();
         uuid = UUID.randomUUID();
 
+        if (!user.isCreator()){
+            binding.createEventView.setVisibility(View.GONE);
+            binding.uAreNotCreator.setVisibility(View.VISIBLE);
+        }
+
         binding.btnImageEvent.setOnClickListener(onClickChooseImage);
 
         binding.btnCreate.setOnClickListener(initAddEventInfo);

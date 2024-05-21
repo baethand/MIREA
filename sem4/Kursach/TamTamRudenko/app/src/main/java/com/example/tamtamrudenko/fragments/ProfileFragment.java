@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.tamtamrudenko.R;
 import com.example.tamtamrudenko.adapters.EventAdapter;
 import com.example.tamtamrudenko.databinding.FragmentProfileBinding;
 import com.example.tamtamrudenko.models.Const;
@@ -93,11 +94,20 @@ public class ProfileFragment extends Fragment {
                 binding.surname.setText(user.getSurname());
                 binding.agePole.setText(user.getAge().toString());
                 binding.descriptionPole.setText(user.getDescription());
+                binding.isCreator.setChecked(user.isCreator());
             }
         });
         binding.btnDone.setOnClickListener(initAddUserInfo);
         binding.chooseImageButton.setOnClickListener(onClickChooseImage);
+        binding.btnAboutMe.setOnClickListener(openAboutMe);
     }
+
+    View.OnClickListener openAboutMe = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setNewFragment(new AboutMeFragment());
+        }
+    };
 
     View.OnClickListener initAddUserInfo = new View.OnClickListener() {
         @Override
@@ -118,6 +128,18 @@ public class ProfileFragment extends Fragment {
 
         }
     };
+
+    public void setNewFragment(Fragment fragment){
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", user);
+        fragment.setArguments(bundle);
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_main, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
     private User prepareUserInfo(){
         Integer age;

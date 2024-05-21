@@ -21,28 +21,18 @@
 
         <ImageView
             android:id="@+id/profile_image"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-
+            android:layout_width="349dp"
+            android:layout_height="192dp"
             android:background="@drawable/round_profile_picture"
-            android:src="@drawable/default_profile_picture"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/my_pic" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/name_surname"
+            android:text="Руденко Алексей"
             android:textSize="32sp"
-            android:textColor="@color/white"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/age"
-            android:textSize="24sp"
             android:textColor="@color/white"
             android:gravity="center"/>
 
@@ -50,24 +40,14 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/description"
+            android:text="Курсовая работа на тему: \n Афиша мероприятий\nИКБО-13-22"
             android:layout_marginTop="10dp"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:gravity="center"/>
 
-        <TextView
-            android:id="@+id/event_creator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Events creator ♥"
-            android:textSize="24sp"
-            android:textColor="@color/white"
-            android:gravity="center"/>
-
         <Button
-            android:id="@+id/btn_edit"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -75,7 +55,7 @@
             android:paddingHorizontal="40dp"
             android:paddingVertical="10dp"
             android:layout_marginBottom="20dp"
-            android:text="@string/edit"/>
+            android:text="@string/back"/>
 
 
     </LinearLayout>
