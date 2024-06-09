@@ -25,7 +25,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         void onItemClick(Event event);
     }
 
-    public EventAdapter(Context context, List<Event> eventList, OnItemClickListener onItemClickListener) {
+    public EventAdapter(Context context, List<Event> eventList,
+                        OnItemClickListener onItemClickListener) {
         this.context = context;
         this.eventList = eventList;
         this.onItemClickListener = onItemClickListener;
@@ -33,8 +34,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @NonNull
     @Override
-    public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_event, parent, false);
+    public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                              int viewType) {
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_event, parent, false);
         return new EventViewHolder(view);
     }
 

@@ -56,9 +56,11 @@ public class ProfileFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = FragmentProfileBinding.inflate(inflater,
+                container, false);
         return binding.getRoot();
     }
 
@@ -70,7 +72,8 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mDataBase = FirebaseDatabase
@@ -86,8 +89,11 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 binding.profileScrollView.setVisibility(View.GONE);
                 binding.editScrollView.setVisibility(View.VISIBLE);
-                if (user.getUserImageUrl() != null && !user.getUserImageUrl().trim().equals("")){
-                    Picasso.get().load(user.getUserImageUrl()).transform(new RoundedCornersTransform()).into(binding.chooseImageButton);
+                if (user.getUserImageUrl() != null
+                        && !user.getUserImageUrl().trim().equals("")){
+                    Picasso.get().load(user.getUserImageUrl()).transform(
+                            new RoundedCornersTransform())
+                            .into(binding.chooseImageButton);
                     uploadUrl = Uri.parse(user.getUserImageUrl());
                 }
                 binding.namePole.setText(user.getName());
@@ -145,7 +151,8 @@ public class ProfileFragment extends Fragment {
         Integer age;
         String name = String.valueOf(binding.namePole.getText()).trim();
         try {
-            age = Integer.parseInt(String.valueOf(binding.agePole.getText()).trim());
+            age = Integer.parseInt(String.valueOf(
+                    binding.agePole.getText()).trim());
         } catch (Exception e){
             return null;
         }
@@ -163,12 +170,14 @@ public class ProfileFragment extends Fragment {
         String surname = String.valueOf(binding.surname.getText()).trim();
         surname = (!surname.equals("")) ? surname : "none";
 
-        String description = String.valueOf(binding.descriptionPole.getText()).trim();
+        String description = String.valueOf(binding.descriptionPole
+                .getText()).trim();
         description = (!description.equals("")) ? description : "none";
 
         Boolean isCreator = binding.isCreator.isChecked();
         String id = user.getId();
-        return new User(id, name, surname, age, description, user.getEvents(), isCreator, uploadUrl.toString());
+        return new User(id, name, surname, age, description, user.getEvents(),
+                isCreator, uploadUrl.toString());
     }
 
     View.OnClickListener onClickChooseImage = new View.OnClickListener() {
@@ -179,7 +188,8 @@ public class ProfileFragment extends Fragment {
     };
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode,
+                                 @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 200 && data != null && data.getData() != null){
             binding.chooseImageButton.setImageURI(data.getData());
@@ -195,15 +205,20 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadImage(){
-        Bitmap bitmap = ((BitmapDrawable) binding.chooseImageButton.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) binding.chooseImageButton
+                .getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
         byte[] byteArray = baos.toByteArray();
-        StorageReference mRef = mStorageReference.child(Const.KEY_PROFILE_IMAGES).child(user.getId()+"-profileImage");
+        StorageReference mRef = mStorageReference
+                .child(Const.KEY_PROFILE_IMAGES)
+                .child(user.getId()+"-profileImage");
         UploadTask uploadTask = mRef.putBytes(byteArray);
-        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+        Task<Uri> task = uploadTask.continueWithTask(
+                new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task)
+                    throws Exception {
                 return mRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -225,12 +240,12 @@ public class ProfileFragment extends Fragment {
         else {
             binding.eventCreator.setVisibility(View.GONE);
         }
-        if (user.getUserImageUrl() != null && !user.getUserImageUrl().trim().equals(""))
-            Picasso.get().load(user.getUserImageUrl()).transform(new RoundedCornersTransform()).into(binding.profileImage);
+        if (user.getUserImageUrl() != null && !user.getUserImageUrl()
+                .trim().equals(""))
+            Picasso.get().load(user.getUserImageUrl()).transform(
+                    new RoundedCornersTransform()).into(binding.profileImage);
     }
 
-
-    //DEFINE THE INTERFACE
     public interface ProfileListener {
         void sendUser(User user);
     }

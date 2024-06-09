@@ -62,12 +62,14 @@ public class EventDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentEventDetailBinding.inflate(inflater, container, false);
+        binding = FragmentEventDetailBinding.inflate(inflater,
+                container, false);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDataBase = FirebaseDatabase
                 .getInstance(Const.DB_URL).getReference();
@@ -75,7 +77,8 @@ public class EventDetailFragment extends Fragment {
         Picasso.get().load(event.getEventImageUrl()).into(binding.imageEvent);
         binding.name.setText(event.getName());
         binding.description.setText(event.getDescription());
-        binding.seats.setText("Available seats: " + (event.getSeats()-event.getUsersId().size()));
+        binding.seats.setText("Available seats: " + (event.getSeats()-
+                event.getUsersId().size()));
         binding.btnParty.setOnClickListener(getParty);
         binding.btnUnparty.setOnClickListener(unParty);
         getDataFromFirebase();
@@ -84,17 +87,22 @@ public class EventDetailFragment extends Fragment {
     View.OnClickListener unParty = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mDataBase.child(Const.KEY_EVENTS).child(event.getId()).child("usersId")
-                    .child(event.getUsersId().indexOf(user.getId())+"").removeValue();
+            mDataBase.child(Const.KEY_EVENTS).child(event.getId())
+                    .child("usersId")
+                    .child(event.getUsersId()
+                            .indexOf(user.getId())+"").removeValue();
 
-            mDataBase.child(Const.KEY_USER).child(user.getId()).child("events")
-                    .child(user.getEvents().indexOf(event.getId())+"").removeValue();
+            mDataBase.child(Const.KEY_USER).child(user.getId())
+                    .child("events")
+                    .child(user.getEvents()
+                            .indexOf(event.getId())+"").removeValue();
         }
     };
 
     private void getDataFromFirebase() {
 
-        mDataBase.child(Const.KEY_USER).child(user.getId()).addValueEventListener(new ValueEventListener() {
+        mDataBase.child(Const.KEY_USER).child(user.getId())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
@@ -106,11 +114,13 @@ public class EventDetailFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Обработка ошибки
-                Log.w("Firebase", "Failed to read value.", error.toException());
+                Log.w("Firebase", "Failed to read value.",
+                        error.toException());
             }
         });
 
-        mDataBase.child(Const.KEY_EVENTS).child(event.getId()).addValueEventListener(new ValueEventListener() {
+        mDataBase.child(Const.KEY_EVENTS).child(event.getId())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 event = dataSnapshot.getValue(Event.class);
@@ -123,7 +133,8 @@ public class EventDetailFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Обработка ошибки
-                Log.w("Firebase", "Failed to read value.", error.toException());
+                Log.w("Firebase", "Failed to read value.",
+                        error.toException());
             }
         });
     }
@@ -148,7 +159,8 @@ public class EventDetailFragment extends Fragment {
             binding.btnUnparty.setVisibility(View.VISIBLE);
             binding.unavailable.setVisibility(View.GONE);
         }
-        else if (avSeats != 0 && !event.getUsersId().contains(user.getId())) {
+        else if (avSeats != 0 && !event.getUsersId().contains(
+                user.getId())) {
             binding.btnParty.setVisibility(View.VISIBLE);
             binding.btnUnparty.setVisibility(View.GONE);
             binding.unavailable.setVisibility(View.GONE);
@@ -159,11 +171,15 @@ public class EventDetailFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            mDataBase.child(Const.KEY_USER).child(user.getId()).child("events")
-                    .child(user.getEvents().size()+"").setValue(event.getId());
+            mDataBase.child(Const.KEY_USER).child(user.getId())
+                    .child("events")
+                    .child(user.getEvents().size()+"")
+                    .setValue(event.getId());
 
-            mDataBase.child(Const.KEY_EVENTS).child(event.getId()).child("usersId")
-                    .child(event.getUsersId().size()+"").setValue(user.getId());
+            mDataBase.child(Const.KEY_EVENTS).child(event.getId())
+                    .child("usersId")
+                    .child(event.getUsersId().size()+"")
+                    .setValue(user.getId());
         }
     };
 }

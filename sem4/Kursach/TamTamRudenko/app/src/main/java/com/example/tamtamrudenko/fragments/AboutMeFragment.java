@@ -22,7 +22,6 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.UUID;
 
-
 public class AboutMeFragment extends Fragment {
 
     FragmentAboutMeBinding binding;

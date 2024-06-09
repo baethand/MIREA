@@ -82,13 +82,16 @@ public class AddProfile extends AppCompatActivity {
     }
 
     private void uploadImage(){
-        Bitmap bitmap = ((BitmapDrawable) binding.chooseImageButton.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) binding.chooseImageButton
+                .getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
         byte[] byteArray = baos.toByteArray();
-        StorageReference mRef = mStorageReference.child(Const.KEY_PROFILE_IMAGES).child(user.getUid()+"-profileImage");
+        StorageReference mRef = mStorageReference.child(Const.KEY_PROFILE_IMAGES)
+                .child(user.getUid()+"-profileImage");
         UploadTask uploadTask = mRef.putBytes(byteArray);
-        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+        Task<Uri> task = uploadTask.continueWithTask(
+                new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 return mRef.getDownloadUrl();
@@ -155,7 +158,8 @@ public class AddProfile extends AppCompatActivity {
 
         Boolean isCreator = binding.isCreator.isChecked();
         String id = user.getUid();
-        return new User(id, name, surname, age, description, new ArrayList<>(), isCreator, uploadUrl.toString());
+        return new User(id, name, surname, age, description, new ArrayList<>(),
+                isCreator, uploadUrl.toString());
     }
 
     public void checkTheAuth(){

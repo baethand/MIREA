@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:background="@color/background"
     tools:context=".fragments.ProfileFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -52,7 +51,6 @@
                 android:id="@+id/profile_image"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-
                 android:background="@drawable/round_profile_picture"
                 android:src="@drawable/default_profile_picture"
                 android:scaleType="centerCrop"
@@ -106,12 +104,7 @@
                 android:paddingVertical="10dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/edit"/>
-
-
         </LinearLayout>
-
-
-
     </ScrollView>
 
     <ScrollView
@@ -145,7 +138,6 @@
                 app:boxCornerRadiusTopStart="25dp"
                 app:boxCornerRadiusBottomEnd="25dp"
                 app:boxCornerRadiusTopEnd="25dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/namePole"
                     android:layout_width="match_parent"
@@ -162,7 +154,6 @@
                 app:boxCornerRadiusTopStart="25dp"
                 app:boxCornerRadiusBottomEnd="25dp"
                 app:boxCornerRadiusTopEnd="25dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/surname"
                     android:layout_width="match_parent"
@@ -179,7 +170,6 @@
                 app:boxCornerRadiusTopStart="25dp"
                 app:boxCornerRadiusBottomEnd="25dp"
                 app:boxCornerRadiusTopEnd="25dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/descriptionPole"
                     android:layout_width="match_parent"
@@ -196,7 +186,6 @@
                 app:boxCornerRadiusTopStart="25dp"
                 app:boxCornerRadiusBottomEnd="25dp"
                 app:boxCornerRadiusTopEnd="25dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/agePole"
                     android:layout_width="match_parent"
@@ -205,8 +194,6 @@
                     android:textColor="@color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-
             <CheckBox
                 android:id="@+id/isCreator"
                 android:layout_width="wrap_content"
@@ -227,8 +214,4 @@
                 android:text="@string/save"/>
         </LinearLayout>
     </ScrollView>
-
-
-
-
 </LinearLayout>
