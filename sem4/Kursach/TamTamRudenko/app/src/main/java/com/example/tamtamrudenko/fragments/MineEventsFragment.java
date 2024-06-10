@@ -54,51 +54,48 @@ public class MineEventsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMineEventsBinding.inflate(inflater,
-                container, false);
+        binding = FragmentMineEventsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view,
-                              @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDataBase = FirebaseDatabase
                 .getInstance(Const.DB_URL)
                 .getReference(Const.KEY_EVENTS);
         mStorageReference = FirebaseStorage.getInstance().getReference();
 
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(
-                getContext(), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(
-                getContext(), R.drawable.empty_tall_divider));
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_tall_divider));
         binding.recyclerView.addItemDecoration(itemDecorator);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(
-                getContext()));
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         eventList = new ArrayList<>();
         getDataFromFirebase();
     }
 
     private void getDataFromFirebase() {
+        // Добавляем слушатель для изменений данных
         mDataBase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Метод вызывается при каждом изменении данных в указанном пути
                 eventList = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Event item = snapshot.getValue(Event.class);
                     if (user.getEvents().contains(item.getId()))
                         eventList.add(item);
                 }
+                // Обработка или отображение полученного списка
                 updateUI(eventList);
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Log.w("Firebase", "Failed to read value.",
-                        error.toException());
+                // Обработка ошибки
+                Log.w("Firebase", "Failed to read value.", error.toException());
             }
         });
     }

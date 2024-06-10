@@ -55,14 +55,12 @@ public class CreateEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentCreateEventBinding.inflate(inflater,
-                container, false);
+        binding = FragmentCreateEventBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view,
-                              @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mDataBase = FirebaseDatabase
@@ -102,11 +100,9 @@ public class CreateEventFragment extends Fragment {
         event.setUsersId(new ArrayList<>());
         event.getUsersId().add(user.getId());
 
-        String name = String.valueOf(binding.eventName
-                .getText()).trim();
+        String name = String.valueOf(binding.eventName.getText()).trim();
         try {
-            seats = Integer.parseInt(String.valueOf(binding.seats
-                    .getText()).trim());
+            seats = Integer.parseInt(String.valueOf(binding.seats.getText()).trim());
         } catch (Exception e){
             return null;
         }
@@ -138,8 +134,7 @@ public class CreateEventFragment extends Fragment {
     };
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 200 && data != null && data.getData() != null){
             binding.btnImageEvent.setImageURI(data.getData());
@@ -155,19 +150,15 @@ public class CreateEventFragment extends Fragment {
     }
 
     private void uploadImage(){
-        Bitmap bitmap = ((BitmapDrawable) binding.btnImageEvent
-                .getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) binding.btnImageEvent.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
         byte[] byteArray = baos.toByteArray();
-        StorageReference mRef = mStorageReference.child(Const.KEY_EVENTS_IMAGES)
-                .child(uuid.toString() +"-eventImage");
+        StorageReference mRef = mStorageReference.child(Const.KEY_EVENTS_IMAGES).child(uuid.toString() +"-eventImage");
         UploadTask uploadTask = mRef.putBytes(byteArray);
-        Task<Uri> task = uploadTask.continueWithTask(
-                new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task)
-                    throws Exception {
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 return mRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {

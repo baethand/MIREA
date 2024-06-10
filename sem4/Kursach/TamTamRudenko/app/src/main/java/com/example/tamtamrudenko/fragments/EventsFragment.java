@@ -35,12 +35,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventsFragment extends Fragment {
+
     private FragmentEventsBinding binding;
     private EventAdapter eventAdapter;
     private User user;
     private List<Event> eventList;
+
     DatabaseReference mDataBase;
     StorageReference mStorageReference;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,51 +55,47 @@ public class EventsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentEventsBinding.inflate(inflater,
-                container, false);
+        binding = FragmentEventsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view,
-                              @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDataBase = FirebaseDatabase
                 .getInstance(Const.DB_URL)
                 .getReference(Const.KEY_EVENTS);
         mStorageReference = FirebaseStorage.getInstance().getReference();
 
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(
-                getContext(), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(
-                getContext(), R.drawable.empty_tall_divider));
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.empty_tall_divider));
         binding.recyclerView.addItemDecoration(itemDecorator);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(
-                getContext()));
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         eventList = new ArrayList<>();
         getDataFromFirebase();
     }
 
     private void getDataFromFirebase() {
+        // Добавляем слушатель для изменений данных
         mDataBase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                // Метод вызывается при каждом изменении данных в указанном пути
                 eventList = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Event item = snapshot.getValue(Event.class);
                     eventList.add(item);
                 }
+                // Обработка или отображение полученного списка
                 updateUI(eventList);
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Обработка ошибки
-                Log.w("Firebase", "Failed to read value.",
-                        error.toException());
+                Log.w("Firebase", "Failed to read value.", error.toException());
             }
         });
     }

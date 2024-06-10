@@ -140,10 +140,14 @@ public class MainActivity extends AppCompatActivity implements ProfileFragment.P
                 Log.d(TAG, "Error getting user data: " + databaseError.getMessage());
             }
         });
+
         return userInfo;
     };
+
     @Override
     public void sendUser(User user) {
         userInfo = user;
     }
+
+
 }

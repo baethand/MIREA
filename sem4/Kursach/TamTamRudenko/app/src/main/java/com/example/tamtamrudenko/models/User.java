@@ -28,7 +28,10 @@ public class User implements Parcelable {
         this.userImageUrl = userImageUrl;
     }
 
-    public User() { }
+    public User() {
+
+    }
+
     protected User(Parcel in) {
         id = in.readString();
         name = in.readString();
@@ -40,6 +43,7 @@ public class User implements Parcelable {
         isCreator = tmpIsCreator == 0 ? null : tmpIsCreator == 1;
         userImageUrl = in.readString();
     }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
@@ -51,6 +55,7 @@ public class User implements Parcelable {
         dest.writeByte((byte) (isCreator == null ? 0 : isCreator ? 1 : 2));
         dest.writeString(userImageUrl);
     }
+
     @Override
     public int describeContents() {
         return 0;
